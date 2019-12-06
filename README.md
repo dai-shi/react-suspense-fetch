@@ -72,7 +72,6 @@ ReactDOM.createRoot(document.getElementById('app')).render(<App />);
 
 ### prepare
 
-Prepare fetch
 Create a new suspendable result from fetchFunc.
 The result is mutable and can be run later.
 It will suspend forever unless run() is called.
@@ -95,8 +94,7 @@ const result = prepare(fetchFunc);
 
 ### run
 
-Run
-Run the prepared suspendable result
+Run the prepared suspendable result.
 
 #### Parameters
 
@@ -114,7 +112,6 @@ run(result, 1); // the result will be mutated.
 
 ### prefetch
 
-Prefetch
 Create a new suspendable result and run fetchFunc immediately.
 
 Type: Prefetch

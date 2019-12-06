@@ -60,7 +60,6 @@ type State<Result> = {
 };
 
 /**
- * Prepare fetch
  * Create a new suspendable result from fetchFunc.
  * The result is mutable and can be run later.
  * It will suspend forever unless run() is called.
@@ -129,8 +128,7 @@ export const prepare: Prepare = <Result extends object, Input, Source>(
 };
 
 /**
- * Run
- * Run the prepared suspendable result
+ * Run the prepared suspendable result.
  *
  * @example
  * import { prepare, run } from 'react-suspense-fetch';
@@ -144,7 +142,6 @@ export const run = <Result extends object, Input>(
 ) => result[RUN_FETCH](input);
 
 /**
- * Prefetch
  * Create a new suspendable result and run fetchFunc immediately.
  *
  * @example
