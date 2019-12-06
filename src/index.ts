@@ -154,9 +154,8 @@ export const prefetch: Prefetch = <Result extends object, Input, Source>(
   inputOrSource: Input | Source,
   transformFunc?: TransformFunc<Input, Source>,
 ) => {
-  /* eslint-disable @typescript-eslint/no-explicit-any */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const result = prepare(fetchFunc, transformFunc as any);
-  run(result, inputOrSource as any);
-  /* eslint-enable @typescript-eslint/no-explicit-any */
+  run(result, inputOrSource);
   return result;
 };
