@@ -1,0 +1,69 @@
+{
+  "name": "react-suspense-fetch",
+  "description": "React Suspense Render-as-You-Fetch pattern for REST APIs",
+  "version": "0.0.1",
+  "author": "Daishi Kato",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dai-shi/react-suspense-fetch.git"
+  },
+  "source": "./src/index.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.esm.js",
+  "browser": "./dist/index.umd.js",
+  "types": "./dist/src/index.d.ts",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "scripts": {
+    "compile": "microbundle build --format cjs,es,umd",
+    "test": "npm run eslint && npm run tsc-test && npm run jest",
+    "eslint": "eslint --ext .js,.ts --ignore-pattern dist .",
+    "jest": "jest",
+    "tsc-test": "tsc --project . --noEmit",
+    "apidoc": "documentation build --format md --markdown-toc false --parse-extension ts src/*.ts | add-text-to-markdown README.md --section API --write",
+    "examples:01_minimal": "DIR=01_minimal EXT=js webpack-dev-server",
+    "examples:02_typescript": "DIR=02_typescript webpack-dev-server",
+    "examples:03_props": "DIR=03_props webpack-dev-server",
+    "examples:04_auth": "DIR=04_auth webpack-dev-server"
+  },
+  "keywords": [
+    "react",
+    "suspense",
+    "concurrent",
+    "async",
+    "fetch"
+  ],
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@testing-library/react": "^9.3.2",
+    "@types/jest": "^24.0.23",
+    "@types/react": "^16.9.15",
+    "@types/react-dom": "^16.9.4",
+    "@typescript-eslint/eslint-plugin": "^2.10.0",
+    "@typescript-eslint/parser": "^2.10.0",
+    "add-text-to-markdown": "^2.0.0",
+    "babel-loader": "^8.0.6",
+    "core-js": "^3.4.7",
+    "documentation": "^12.1.4",
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.9.0",
+    "microbundle": "^0.12.0-next.6",
+    "react": "experimental",
+    "react-dom": "experimental",
+    "ts-jest": "^24.2.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.3",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
+  }
+}
