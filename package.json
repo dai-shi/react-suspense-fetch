@@ -12,6 +12,7 @@
   "module": "./dist/index.esm.js",
   "browser": "./dist/index.umd.js",
   "types": "./dist/src/index.d.ts",
+  "sideEffects": false,
   "files": [
     "src",
     "dist"
