@@ -7,16 +7,16 @@ import Item from './Item';
 export const fetchFunc = async (userId: string) => (await fetch(`https://reqres.in/api/users/${userId}?delay=3`)).json();
 
 const items = [
-  { key: 'a', initialResult: prepare(fetchFunc) },
-  { key: 'b', initialResult: prepare(fetchFunc) },
-  { key: 'c', initialResult: prepare(fetchFunc) },
+  { id: '1', result: prepare(fetchFunc) },
+  { id: '2', result: prepare(fetchFunc) },
+  { id: '3', result: prepare(fetchFunc) },
 ];
 
 const App: React.FC = () => (
   <Suspense fallback={<span>Loading...</span>}>
-    {items.map(({ key, initialResult }) => (
-      <div key={key}>
-        <Item initialResult={initialResult} />
+    {items.map(({ id, result }) => (
+      <div key={id}>
+        <Item id={id} result={result} />
         <hr />
       </div>
     ))}

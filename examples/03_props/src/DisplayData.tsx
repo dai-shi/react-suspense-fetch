@@ -1,7 +1,6 @@
 import React from 'react';
 
 type Props = {
-  id: string;
   result: { data: { first_name: string } };
 };
 
