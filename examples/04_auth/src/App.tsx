@@ -1,29 +1,17 @@
-import React, { Suspense, createContext } from 'react';
-
-import { prepare } from 'react-suspense-fetch';
+import React, { Suspense, createContext, useState } from 'react';
 
 import Main from './Main';
 
-const loginFunc = async ({ email, password }: { email: string; password: string }) => {
-  const res = await fetch('https://reqres.in/api/login?delay=1', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ email, password }),
-  });
-  if (res.status !== 200) throw new Error('login failed');
-  const data = await res.json();
-  return data as { token: string };
-};
+const useAuthState = () => useState<{ token: string } | null>(null);
 
-const AuthState = prepare(loginFunc);
-
-export const AuthContext = createContext<typeof AuthState | null>(null);
+export const AuthContext = createContext<ReturnType<typeof useAuthState>>([
+  null,
+  () => { throw new Error('uninitialized'); },
+]);
 
 const App: React.FC = () => (
-  <Suspense fallback={<span>Loading... (never shown)</span>}>
-    <AuthContext.Provider value={AuthState}>
+  <Suspense fallback={<span>Loading...</span>}>
+    <AuthContext.Provider value={useAuthState()}>
       <Main />
     </AuthContext.Provider>
   </Suspense>

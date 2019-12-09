@@ -1,11 +1,11 @@
-import React, { Suspense, useContext } from 'react';
+import React, { useContext } from 'react';
 
 import { prepare, run } from 'react-suspense-fetch';
 
 import { AuthContext } from './App';
 
 const fetchUserDataFunc = async (token: string) => {
-  const res = await fetch('https://reqres.in/api/items?delay=1', {
+  const res = await fetch('https://reqres.in/api/items?delay=2', {
     headers: {
       Token: token,
     },
@@ -19,17 +19,15 @@ const extractToken = (authState: { token: string }) => authState.token;
 const UserItems = prepare(fetchUserDataFunc, extractToken);
 
 const UserData: React.FC = () => {
-  const AuthState = useContext(AuthContext);
-  if (!AuthState) throw new Error('Missing AuthContext.Provider');
-  run(UserItems, AuthState);
+  const [authState] = useContext(AuthContext);
+  if (!authState) throw new Error('no authState');
+  run(UserItems, authState);
   return (
-    <Suspense fallback={<div>Fetching data...</div>}>
-      <ul>
-        {UserItems.data.map(item => (
-          <li key={item.id}>{item.name}</li>
-        ))}
-      </ul>
-    </Suspense>
+    <ul>
+      {UserItems.data.map(item => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
   );
 };
 
