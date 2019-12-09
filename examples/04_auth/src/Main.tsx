@@ -5,11 +5,16 @@ import { run } from 'react-suspense-fetch';
 import { AuthContext } from './App';
 import UserData from './UserData';
 
-const Main: React.FC = () => {
+const Login: React.FC = () => {
   const AuthState = useContext(AuthContext);
   if (!AuthState) throw new Error('Missing AuthContext.Provider');
   const [email, setEmail] = useState('eve.holt@reqres.in');
   const [password, setPassword] = useState('cityslicka');
+  const [isPending, setIsPending] = useState(false);
+  const onClick = () => {
+    setIsPending(true); // we can't use transison because there's no transition...
+    run(AuthState, { email, password });
+  };
   return (
     <div>
       <div>
@@ -21,12 +26,20 @@ const Main: React.FC = () => {
         <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
       </div>
       <div>
-        <button type="button" onClick={() => run(AuthState, { email, password })}>Login</button>
+        <button type="button" onClick={onClick}>Login</button>
+        {isPending && 'Pending...'}
       </div>
-      <Suspense fallback={<div>Waiting for Login...</div>}>
-        <UserData />
-      </Suspense>
     </div>
+  );
+};
+
+const Main: React.FC = () => {
+  const AuthState = useContext(AuthContext);
+  if (!AuthState) throw new Error('Missing AuthContext.Provider');
+  return (
+    <Suspense fallback={<Login />}>
+      <UserData />
+    </Suspense>
   );
 };
 

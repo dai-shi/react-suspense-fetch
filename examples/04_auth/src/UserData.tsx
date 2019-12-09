@@ -5,7 +5,7 @@ import { prepare, run } from 'react-suspense-fetch';
 import { AuthContext } from './App';
 
 const fetchUserDataFunc = async (token: string) => {
-  const res = await fetch('https://reqres.in/api/items?delay=3', {
+  const res = await fetch('https://reqres.in/api/items?delay=1', {
     headers: {
       Token: token,
     },

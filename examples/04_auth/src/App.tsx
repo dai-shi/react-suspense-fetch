@@ -5,7 +5,7 @@ import { prepare } from 'react-suspense-fetch';
 import Main from './Main';
 
 const loginFunc = async ({ email, password }: { email: string; password: string }) => {
-  const res = await fetch('https://reqres.in/api/login?delay=3', {
+  const res = await fetch('https://reqres.in/api/login?delay=1', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ const AuthState = prepare(loginFunc);
 export const AuthContext = createContext<typeof AuthState | null>(null);
 
 const App: React.FC = () => (
-  <Suspense fallback={<span>Loading...</span>}>
+  <Suspense fallback={<span>Loading... (never shown)</span>}>
     <AuthContext.Provider value={AuthState}>
       <Main />
     </AuthContext.Provider>
