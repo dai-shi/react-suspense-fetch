@@ -27,7 +27,8 @@
     "examples:01_minimal": "DIR=01_minimal EXT=js webpack-dev-server",
     "examples:02_typescript": "DIR=02_typescript webpack-dev-server",
     "examples:03_props": "DIR=03_props webpack-dev-server",
-    "examples:04_auth": "DIR=04_auth webpack-dev-server"
+    "examples:04_auth": "DIR=04_auth webpack-dev-server",
+    "examples:05_todolist": "DIR=05_todolist webpack-dev-server"
   },
   "keywords": [
     "react",
