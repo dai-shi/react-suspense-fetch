@@ -9,7 +9,7 @@ import React, {
 
 import { prefetch } from 'react-suspense-fetch';
 
-import { createTodo, TodoType } from './App';
+import { createTodo, TodoType } from './fetchFuncs';
 
 type Props = {
   setItems: Dispatch<SetStateAction<TodoType[]>>;

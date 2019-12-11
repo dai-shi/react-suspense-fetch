@@ -4,18 +4,16 @@ import React, { useState, useTransition } from 'react';
 
 import { prefetch } from 'react-suspense-fetch';
 
-import { fetchTodos, TodoType } from './App';
+import { fetchTodos, TodoType } from './fetchFuncs';
 import NewItem from './NewItem';
 
-type Props = {
-  initialItems: TodoType[];
-};
+const initialItems = prefetch(fetchTodos, null);
 
-const TodoList: React.FC<Props> = ({ initialItems }) => {
+const TodoList: React.FC = () => {
   const [startTransition, isPending] = useTransition({
     timeoutMs: 2000,
   });
-  const [items, setItems] = useState(initialItems);
+  const [items, setItems] = useState<TodoType[]>(initialItems);
   const onClick = () => {
     startTransition(() => {
       setItems(prefetch(fetchTodos, null));
