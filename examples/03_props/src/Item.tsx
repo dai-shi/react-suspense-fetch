@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { run, FetchResult } from 'react-suspense-fetch';
+import { run, Prepared } from 'react-suspense-fetch';
 
 import DisplayData from './DisplayData';
 
 type Props = {
   id: string;
-  result: FetchResult<{ data: { first_name: string } }, string>;
+  result: Prepared<{ data: { first_name: string } }, string>;
 };
 
 const Item: React.FC<Props> = ({ id, result }) => {

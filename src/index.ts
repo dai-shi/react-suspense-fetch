@@ -6,18 +6,21 @@ type FetchFunc<Result, Input> = (input: Input) => Promise<Result>;
 
 type TransformFunc<Input, Source> = (source: Source) => Input;
 
-export type FetchResult<Result, Input> = Result & {
-  [RUN_FETCH]: (input: Input) => FetchResult<Result, Input>;
+// A result that can throw a promise
+type Suspendable<Result> = Result;
+
+export type Prepared<Result, Input> = Suspendable<Result> & {
+  [RUN_FETCH]: (input: Input) => void;
 };
 
 type Prepare = {
   <Result extends object, Input, Source>(
     fetchFunc: FetchFunc<Result, Input>,
     transformFunc: TransformFunc<Input, Source>,
-  ): FetchResult<Result, Source>;
+  ): Prepared<Result, Source>;
   <Result extends object, Input>(
     fetchFunc: FetchFunc<Result, Input>,
-  ): FetchResult<Result, Input>;
+  ): Prepared<Result, Input>;
 };
 
 type Prefetch = {
@@ -25,11 +28,11 @@ type Prefetch = {
     fetchFunc: FetchFunc<Result, Input>,
     source: Source,
     transformFunc: TransformFunc<Input, Source>,
-  ): FetchResult<Result, Source>;
+  ): Suspendable<Result>;
   <Result extends object, Input>(
     fetchFunc: FetchFunc<Result, Input>,
     input: Input,
-  ): FetchResult<Result, Input>;
+  ): Suspendable<Result>;
 };
 
 const isPromise = (x: unknown): x is Promise<unknown> => (
@@ -61,7 +64,7 @@ type State<Result> = {
 
 /**
  * Create a new suspendable result from fetchFunc.
- * The result is mutable and can be run later.
+ * The result is mutable and can be run later just once.
  * It will suspend forever unless run() is called.
  *
  * @example
@@ -124,7 +127,7 @@ export const prepare: Prepare = <Result extends object, Input, Source>(
       if (state.error) throw state.error;
       return Reflect.ownKeys(state.data as { [key: string]: unknown });
     },
-  }) as FetchResult<Result, Input | Source>;
+  }) as Prepared<Result, Input | Source>;
 };
 
 /**
@@ -133,11 +136,12 @@ export const prepare: Prepare = <Result extends object, Input, Source>(
  * @example
  * import { prepare, run } from 'react-suspense-fetch';
  *
+ * const fetchFunc = async userId => (await fetch(`https://reqres.in/api/users/${userId}?delay=3`)).json();
  * const result = prepare(fetchFunc);
  * run(result, 1); // the result will be mutated.
  */
 export const run = <Result extends object, Input>(
-  result: FetchResult<Result, Input>,
+  result: Prepared<Result, Input>,
   input: Input,
 ) => result[RUN_FETCH](input);
 
@@ -147,6 +151,7 @@ export const run = <Result extends object, Input>(
  * @example
  * import { prefetch } from 'react-suspense-fetch';
  *
+ * const fetchFunc = async userId => (await fetch(`https://reqres.in/api/users/${userId}?delay=3`)).json();
  * const result = prefetch(fetchFunc, 1);
  */
 export const prefetch: Prefetch = <Result extends object, Input, Source>(

@@ -73,7 +73,7 @@ ReactDOM.createRoot(document.getElementById('app')).render(<App />);
 ### prepare
 
 Create a new suspendable result from fetchFunc.
-The result is mutable and can be run later.
+The result is mutable and can be run later just once.
 It will suspend forever unless run() is called.
 
 Type: Prepare
@@ -98,7 +98,7 @@ Run the prepared suspendable result.
 
 #### Parameters
 
-- `result` **FetchResult&lt;Result, Input>** 
+- `result` **Prepared&lt;Result, Input>** 
 - `input` **Input** 
 
 #### Examples
@@ -106,6 +106,7 @@ Run the prepared suspendable result.
 ```javascript
 import { prepare, run } from 'react-suspense-fetch';
 
+const fetchFunc = async userId => (await fetch(`https://reqres.in/api/users/${userId}?delay=3`)).json();
 const result = prepare(fetchFunc);
 run(result, 1); // the result will be mutated.
 ```
@@ -127,6 +128,7 @@ Type: Prefetch
 ```javascript
 import { prefetch } from 'react-suspense-fetch';
 
+const fetchFunc = async userId => (await fetch(`https://reqres.in/api/users/${userId}?delay=3`)).json();
 const result = prefetch(fetchFunc, 1);
 ```
 
