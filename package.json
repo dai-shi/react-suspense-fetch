@@ -1,7 +1,7 @@
 {
   "name": "react-suspense-fetch",
   "description": "React Suspense Render-as-You-Fetch pattern for REST APIs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Daishi Kato",
   "repository": {
     "type": "git",
