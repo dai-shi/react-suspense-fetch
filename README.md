@@ -149,3 +149,7 @@ You can also try them in codesandbox.io:
 [03](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/03_props)
 [04](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/04_auth)
 [05](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/05_todolist)
+
+## Blogs
+
+- [Diving Into React Suspense Render-as-You-Fetch for REST APIs](https://blog.axlight.com/posts/diving-into-react-suspense-render-as-you-fetch-for-rest-apis/)
