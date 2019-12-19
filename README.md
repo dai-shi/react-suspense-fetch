@@ -149,6 +149,7 @@ You can also try them in codesandbox.io:
 [03](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/03_props)
 [04](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/04_auth)
 [05](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/05_todolist)
+[06](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/06_reactlazy)
 
 ## Blogs
 

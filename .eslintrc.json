@@ -26,7 +26,8 @@
     "react/prop-types": "off",
     "react/jsx-one-expression-per-line": "off",
     "import/extensions": ["error", "never"],
-    "import/no-unresolved": ["error", { "ignore": ["react-suspense-fetch"] }]
+    "import/no-unresolved": ["error", { "ignore": ["react-suspense-fetch"] }],
+    "camelcase": ["error", { "properties": "never", "ignoreDestructuring": false, "allow": ["first_name"] }]
   },
   "overrides": [{
     "files": ["__tests__/**/*"],
