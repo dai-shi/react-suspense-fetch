@@ -21,7 +21,7 @@ const DisplayData = ({ result, refetch }) => {
   );
 };
 
-const fetchFunc = async userId => (await fetch(`https://reqres.in/api/users/${userId}?delay=3`)).json();
+const fetchFunc = async (userId) => (await fetch(`https://reqres.in/api/users/${userId}?delay=3`)).json();
 const initialResult = prefetch(fetchFunc, '1');
 
 const Main = () => {
