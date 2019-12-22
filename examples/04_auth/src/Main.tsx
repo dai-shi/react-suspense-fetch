@@ -38,11 +38,11 @@ const Login: React.FC = () => {
     <div>
       <div>
         Email:
-        <input value={email} onChange={e => setEmail(e.target.value)} />
+        <input value={email} onChange={(e) => setEmail(e.target.value)} />
       </div>
       <div>
         Password:
-        <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       </div>
       <div>
         <button type="button" onClick={onClick}>Login</button>

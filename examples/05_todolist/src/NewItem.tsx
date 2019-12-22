@@ -23,13 +23,13 @@ const NewItem: React.FC<Props> = ({ setItems }) => {
   const onClick = () => {
     if (!name) return;
     startTransition(() => {
-      setItems(prev => [...prev, prefetch(createTodo, name)]);
+      setItems((prev) => [...prev, prefetch(createTodo, name)]);
       setName('');
     });
   };
   return (
     <>
-      <input value={name} onChange={e => setName(e.target.value)} />
+      <input value={name} onChange={(e) => setName(e.target.value)} />
       <button type="button" onClick={onClick} disabled={!name}>Create New Item</button>
       {isPending && 'Pending...'}
     </>

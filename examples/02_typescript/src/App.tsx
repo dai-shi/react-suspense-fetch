@@ -3,13 +3,12 @@ import React, { Suspense } from 'react';
 import { prefetch } from 'react-suspense-fetch';
 
 import Item from './Item';
-
-export const fetchFunc = async (userId: string) => (await fetch(`https://reqres.in/api/users/${userId}?delay=3`)).json();
+import { fetchUser } from './fetchFuncs';
 
 const items = [
-  { id: '1', initialResult: prefetch(fetchFunc, '1') },
-  { id: '2', initialResult: prefetch(fetchFunc, '2') },
-  { id: '3', initialResult: prefetch(fetchFunc, '3') },
+  { id: '1', initialResult: prefetch(fetchUser, '1') },
+  { id: '2', initialResult: prefetch(fetchUser, '2') },
+  { id: '3', initialResult: prefetch(fetchUser, '3') },
 ];
 
 const App: React.FC = () => (

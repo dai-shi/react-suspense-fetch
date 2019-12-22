@@ -20,7 +20,7 @@
   "scripts": {
     "compile": "microbundle build --format cjs,es,umd",
     "test": "npm run eslint && npm run tsc-test && npm run jest",
-    "eslint": "eslint --ext .js,.ts --ignore-pattern dist .",
+    "eslint": "eslint --ext .js,.ts,.tsx --ignore-pattern dist .",
     "jest": "jest",
     "tsc-test": "tsc --project . --noEmit",
     "apidoc": "documentation build --format md --markdown-toc false --parse-extension ts src/*.ts | add-text-to-markdown README.md --section API --write",

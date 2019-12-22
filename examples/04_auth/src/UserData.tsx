@@ -24,7 +24,7 @@ const UserData: React.FC = () => {
   run(UserItems, authState);
   return (
     <ul>
-      {UserItems.data.map(item => (
+      {UserItems.data.map((item) => (
         <li key={item.id}>{item.name}</li>
       ))}
     </ul>

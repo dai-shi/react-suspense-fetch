@@ -24,7 +24,7 @@ const TodoList: React.FC = () => {
       <button type="button" onClick={onClick}>Refetch</button>
       {isPending && 'Pending...'}
       <ul>
-        {items.map(item => (
+        {items.map((item) => (
           <li key={item.id}>{item.name}</li>
         ))}
         <li><NewItem setItems={setItems} /></li>
