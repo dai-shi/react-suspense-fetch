@@ -150,6 +150,7 @@ You can also try them in codesandbox.io:
 [04](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/04_auth)
 [05](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/05_todolist)
 [06](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/06_reactlazy)
+[07](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/07_wasm)
 
 ## Blogs
 

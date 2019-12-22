@@ -29,7 +29,8 @@
     "examples:03_props": "DIR=03_props webpack-dev-server",
     "examples:04_auth": "DIR=04_auth webpack-dev-server",
     "examples:05_todolist": "DIR=05_todolist webpack-dev-server",
-    "examples:06_reactlazy": "DIR=06_reactlazy webpack-dev-server"
+    "examples:06_reactlazy": "DIR=06_reactlazy webpack-dev-server",
+    "examples:07_wasm": "DIR=07_wasm webpack-dev-server"
   },
   "keywords": [
     "react",
