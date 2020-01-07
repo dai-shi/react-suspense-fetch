@@ -1,5 +1,4 @@
 import React, {
-  useContext,
   useState,
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
@@ -8,7 +7,7 @@ import React, {
 
 import { prefetch } from 'react-suspense-fetch';
 
-import { AuthContext } from './App';
+import { useAuthContext } from './AuthContext';
 import UserData from './UserData';
 
 const loginFunc = async ({ email, password }: { email: string; password: string }) => {
@@ -25,7 +24,7 @@ const loginFunc = async ({ email, password }: { email: string; password: string 
 };
 
 const Login: React.FC = () => {
-  const [, setAuthState] = useContext(AuthContext);
+  const [, setAuthState] = useAuthContext();
   const [email, setEmail] = useState('eve.holt@reqres.in');
   const [password, setPassword] = useState('cityslicka');
   const [startTransition, isPending] = useTransition({ timeoutMs: 1500 });
@@ -53,7 +52,7 @@ const Login: React.FC = () => {
 };
 
 const Main: React.FC = () => {
-  const [authState] = useContext(AuthContext);
+  const [authState] = useAuthContext();
   if (!authState) return <Login />;
   return <UserData />;
 };

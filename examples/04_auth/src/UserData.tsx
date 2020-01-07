@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import { prepare, run } from 'react-suspense-fetch';
 
-import { AuthContext } from './App';
+import { useAuthContext } from './AuthContext';
 
 const fetchUserDataFunc = async (token: string) => {
   const res = await fetch('https://reqres.in/api/items?delay=2', {
@@ -19,8 +19,7 @@ const extractToken = (authState: { token: string }) => authState.token;
 const UserItems = prepare(fetchUserDataFunc, extractToken);
 
 const UserData: React.FC = () => {
-  const [authState] = useContext(AuthContext);
-  if (!authState) throw new Error('no authState');
+  const [authState] = useAuthContext();
   run(UserItems, authState);
   return (
     <ul>
