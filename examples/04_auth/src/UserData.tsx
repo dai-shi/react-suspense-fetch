@@ -20,6 +20,7 @@ const UserItems = prepare(fetchUserDataFunc, extractToken);
 
 const UserData: React.FC = () => {
   const [authState] = useAuthContext();
+  if (!authState) throw new Error('no authState');
   run(UserItems, authState);
   return (
     <ul>

@@ -13,8 +13,4 @@ export const AuthContextProvider: React.FC = ({ children }) => (
   </AuthContext.Provider>
 );
 
-export const useAuthContext = () => {
-  const [authState, setAuthState] = useContext(AuthContext);
-  if (!authState) throw new Error('no authState');
-  return [authState, setAuthState] as const;
-};
+export const useAuthContext = () => useContext(AuthContext);
