@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "core-js": "^3.3.3",
+    "core-js": "latest",
     "react": "experimental",
     "react-dom": "experimental",
     "react-suspense-fetch": "latest",
-    "react-scripts": "^3.0.1"
+    "react-scripts": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
