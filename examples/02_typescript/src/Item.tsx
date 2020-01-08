@@ -1,25 +1,25 @@
 import React, { useState } from 'react';
 
-import { prefetch } from 'react-suspense-fetch';
+import { refetch, Suspendable } from 'react-suspense-fetch';
 
-import { fetchUser } from './fetchFuncs';
+import { UserData } from './fetchFuncs';
 import DisplayData from './DisplayData';
 
 type Props = {
   initialId: string;
-  initialResult: { data: { first_name: string } };
+  initialResult: Suspendable<UserData, string>;
 };
 
 const Item: React.FC<Props> = ({ initialId, initialResult }) => {
   const [id, setId] = useState(initialId);
   const [result, setResult] = useState(initialResult);
-  const refetch = (nextId: string) => {
-    setResult(prefetch(fetchUser, nextId));
+  const update = (nextId: string) => {
+    setResult(refetch(result, nextId));
   };
   return (
     <div>
       User ID: <input value={id} onChange={(e) => setId(e.target.value)} />
-      <DisplayData id={id} result={result} refetch={refetch} />
+      <DisplayData id={id} result={result} update={update} />
     </div>
   );
 };

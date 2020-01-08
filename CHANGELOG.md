@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [0.0.4] - 2020-01-08
+### Added
+- New refetch API
+
 ## [0.0.3] - 2019-12-12
 ### Changed
 - Improve typing

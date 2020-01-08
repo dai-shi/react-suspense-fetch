@@ -3,12 +3,12 @@ import React, { Suspense } from 'react';
 import { prefetch } from 'react-suspense-fetch';
 
 import Item from './Item';
-import { fetchUser } from './fetchFuncs';
+import { fetchUser, UserData } from './fetchFuncs';
 
 const items = [
-  { id: '1', initialResult: prefetch(fetchUser, '1') },
-  { id: '2', initialResult: prefetch(fetchUser, '2') },
-  { id: '3', initialResult: prefetch(fetchUser, '3') },
+  { id: '1', initialResult: prefetch<UserData, string>(fetchUser, '1') },
+  { id: '2', initialResult: prefetch<UserData, string>(fetchUser, '2') },
+  { id: '3', initialResult: prefetch<UserData, string>(fetchUser, '3') },
 ];
 
 const App: React.FC = () => (

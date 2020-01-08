@@ -2,9 +2,8 @@ import React, { Suspense } from 'react';
 
 import { prepare } from 'react-suspense-fetch';
 
+import { fetchFunc } from './fetchFuncs';
 import Item from './Item';
-
-export const fetchFunc = async (userId: string) => (await fetch(`https://reqres.in/api/users/${userId}?delay=3`)).json();
 
 const items = [
   { id: '1', result: prepare(fetchFunc) },

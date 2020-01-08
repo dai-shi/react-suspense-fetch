@@ -1,26 +1,35 @@
-/* eslint arrow-parens: off */ // FIXME why does it complain?
+// ----------------------------------------------------------------------
+// Symbols
+// ----------------------------------------------------------------------
 
 const RUN_FETCH = Symbol('RUN_FETCH');
+const CLONE_FETCH = Symbol('CLONE_FETCH');
+
+// ----------------------------------------------------------------------
+// Types
+// ----------------------------------------------------------------------
 
 type FetchFunc<Result, Input> = (input: Input) => Promise<Result>;
 
 type TransformFunc<Input, Source> = (source: Source) => Input;
 
-// A result that can throw a promise
-type Suspendable<Result> = Result;
-
-export type Prepared<Result, Input> = Suspendable<Result> & {
+/**
+ * Type for suspendable result with special functions.
+ * Suspendable can throw a promise.
+ */
+export type Suspendable<Result, Input> = Result & {
   [RUN_FETCH]: (input: Input) => void;
+  [CLONE_FETCH]: () => Suspendable<Result, Input>;
 };
 
 type Prepare = {
   <Result extends object, Input, Source>(
     fetchFunc: FetchFunc<Result, Input>,
     transformFunc: TransformFunc<Input, Source>,
-  ): Prepared<Result, Source>;
+  ): Suspendable<Result, Source>;
   <Result extends object, Input>(
     fetchFunc: FetchFunc<Result, Input>,
-  ): Prepared<Result, Input>;
+  ): Suspendable<Result, Input>;
 };
 
 type Prefetch = {
@@ -28,12 +37,21 @@ type Prefetch = {
     fetchFunc: FetchFunc<Result, Input>,
     source: Source,
     transformFunc: TransformFunc<Input, Source>,
-  ): Suspendable<Result>;
+  ): Suspendable<Result, Source>;
   <Result extends object, Input>(
     fetchFunc: FetchFunc<Result, Input>,
     input: Input,
-  ): Suspendable<Result>;
+  ): Suspendable<Result, Input>;
 };
+
+type Refetch = <Result extends object, Input>(
+  result: Suspendable<Result, Input>,
+  input: Input,
+) => Suspendable<Result, Input>;
+
+// ----------------------------------------------------------------------
+// Utility Functions
+// ----------------------------------------------------------------------
 
 const isPromise = (x: unknown): x is Promise<unknown> => (
   !!x && typeof (x as Promise<unknown>).then === 'function'
@@ -54,6 +72,10 @@ const transform = async <Input, Source>(
   }
 };
 
+// ----------------------------------------------------------------------
+// Main Functions
+// ----------------------------------------------------------------------
+
 type State<Result> = {
   started: boolean;
   promise?: Promise<void>;
@@ -67,10 +89,15 @@ type State<Result> = {
  * The result is mutable and can be run later just once.
  * It will suspend forever unless run() is called.
  *
+ * This is an internal API. Prefer using prefetch/refetch.
+ *
  * @example
  * import { prepare } from 'react-suspense-fetch';
  *
- * const fetchFunc = async userId => (await fetch(`https://reqres.in/api/users/${userId}?delay=3`)).json();
+ * const fetchFunc = async (userId) => {
+ *   const res = await fetch(`https://reqres.in/api/users/${userId}?delay=3`);
+ *   return res.json();
+ * };
  * const result = prepare(fetchFunc);
  */
 export const prepare: Prepare = <Result extends object, Input, Source>(
@@ -104,9 +131,12 @@ export const prepare: Prepare = <Result extends object, Input, Source>(
     if (state.started) return;
     state.promise = start(inputOrSource);
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const cloneFetch = () => prepare(fetchFunc, transformFunc as any);
   return new Proxy({}, {
     get(_target, key) {
       if (key === RUN_FETCH) return runFetch;
+      if (key === CLONE_FETCH) return cloneFetch;
       if (state.promise) throw state.promise;
       if (state.error) throw state.error;
       const item = (state.data as { [key: string]: unknown })[key as string];
@@ -127,21 +157,26 @@ export const prepare: Prepare = <Result extends object, Input, Source>(
       if (state.error) throw state.error;
       return Reflect.ownKeys(state.data as { [key: string]: unknown });
     },
-  }) as Prepared<Result, Input | Source>;
+  }) as Suspendable<Result, Input | Source>;
 };
 
 /**
  * Run the prepared suspendable result.
  *
+ * This is an internal API. Prefer using prefetch/refetch.
+ *
  * @example
  * import { prepare, run } from 'react-suspense-fetch';
  *
- * const fetchFunc = async userId => (await fetch(`https://reqres.in/api/users/${userId}?delay=3`)).json();
+ * const fetchFunc = async (userId) => {
+ *   const res = await fetch(`https://reqres.in/api/users/${userId}?delay=3`);
+ *   return res.json();
+ * };
  * const result = prepare(fetchFunc);
  * run(result, 1); // the result will be mutated.
  */
 export const run = <Result extends object, Input>(
-  result: Prepared<Result, Input>,
+  result: Suspendable<Result, Input>,
   input: Input,
 ) => result[RUN_FETCH](input);
 
@@ -163,4 +198,24 @@ export const prefetch: Prefetch = <Result extends object, Input, Source>(
   const result = prepare(fetchFunc, transformFunc as any);
   run(result, inputOrSource);
   return result;
+};
+
+/**
+ * Create a new suspendable result and from an existing suspendable result.
+ * It runs fetchFunc immediately.
+ *
+ * @example
+ * import { refetch } from 'react-suspense-fetch';
+ *
+ * const result = ...; // created by prepare or prefetch
+ * const newResult = refetch(result, 2);
+ */
+export const refetch: Refetch = <Result extends object, Input>(
+  result: Suspendable<Result, Input>,
+  input: Input,
+) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const newResult = result[CLONE_FETCH]();
+  run(newResult, input);
+  return newResult;
 };

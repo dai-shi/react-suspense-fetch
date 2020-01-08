@@ -21,7 +21,7 @@ const TodoList: React.FC = () => {
   };
   return (
     <div>
-      <button type="button" onClick={onClick}>Refetch</button>
+      <button type="button" onClick={onClick}>Refresh</button>
       {isPending && 'Pending...'}
       <ul>
         {items.map((item) => (

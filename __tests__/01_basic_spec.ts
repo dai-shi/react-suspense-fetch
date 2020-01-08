@@ -2,6 +2,7 @@ import {
   prepare,
   run,
   prefetch,
+  refetch,
 } from '../src/index';
 
 describe('basic spec', () => {
@@ -9,5 +10,6 @@ describe('basic spec', () => {
     expect(prepare).toBeDefined();
     expect(run).toBeDefined();
     expect(prefetch).toBeDefined();
+    expect(refetch).toBeDefined();
   });
 });

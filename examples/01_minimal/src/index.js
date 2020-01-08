@@ -1,15 +1,15 @@
 import React, { Suspense, useState, useTransition } from 'react';
 import ReactDOM from 'react-dom';
 
-import { prefetch } from 'react-suspense-fetch';
+import { prefetch, refetch } from 'react-suspense-fetch';
 
-const DisplayData = ({ result, refetch }) => {
+const DisplayData = ({ result, update }) => {
   const [startTransition, isPending] = useTransition({
     timeoutMs: 1000,
   });
   const onClick = () => {
     startTransition(() => {
-      refetch('2');
+      update('2');
     });
   };
   return (
@@ -26,10 +26,10 @@ const initialResult = prefetch(fetchFunc, '1');
 
 const Main = () => {
   const [result, setResult] = useState(initialResult);
-  const refetch = (id) => {
-    setResult(prefetch(fetchFunc, id));
+  const update = (id) => {
+    setResult(refetch(result, id));
   };
-  return <DisplayData result={result} refetch={refetch} />;
+  return <DisplayData result={result} update={update} />;
 };
 
 const App = () => (
