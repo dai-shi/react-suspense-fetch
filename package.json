@@ -1,6 +1,6 @@
 {
   "name": "react-suspense-fetch",
-  "description": "React Suspense Render-as-You-Fetch pattern for REST APIs",
+  "description": "A primitive library for React Suspense Render-as-You-Fetch",
   "version": "0.0.3",
   "author": "Daishi Kato",
   "repository": {

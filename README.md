@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/react-suspense-fetch.svg)](https://badge.fury.io/js/react-suspense-fetch)
 [![bundle size](https://badgen.net/bundlephobia/minzip/react-suspense-fetch)](https://bundlephobia.com/result?p=react-suspense-fetch)
 
-React Suspense Render-as-You-Fetch pattern for REST APIs
+A primitive library for React Suspense Render-as-You-Fetch
 
 ## Introduction
 
