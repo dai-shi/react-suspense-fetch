@@ -89,8 +89,8 @@ Type: Prepare
 
 #### Parameters
 
-- `fetchFunc` **FetchFunc&lt;Result, Input>** 
-- `transformFunc` **TransformFunc&lt;Input, Source>?** 
+-   `fetchFunc` **FetchFunc&lt;Result, Input>** 
+-   `transformFunc` **TransformFunc&lt;Input, Source>?** 
 
 #### Examples
 
@@ -112,8 +112,8 @@ This is an internal API. Prefer using prefetch/refetch.
 
 #### Parameters
 
-- `result` **[Suspendable][1]&lt;Result, Input>** 
-- `input` **Input** 
+-   `result` **[Suspendable](#suspendable)&lt;Result, Input>** 
+-   `input` **Input** 
 
 #### Examples
 
@@ -136,9 +136,9 @@ Type: Prefetch
 
 #### Parameters
 
-- `fetchFunc` **FetchFunc&lt;Result, Input>** 
-- `inputOrSource` **(Input | Source)** 
-- `transformFunc` **TransformFunc&lt;Input, Source>?** 
+-   `fetchFunc` **FetchFunc&lt;Result, Input>** 
+-   `inputOrSource` **(Input | Source)** 
+-   `transformFunc` **TransformFunc&lt;Input, Source>?** 
 
 #### Examples
 
@@ -158,8 +158,8 @@ Type: Refetch
 
 #### Parameters
 
-- `result` **[Suspendable][1]&lt;Result, Input>** 
-- `input` **Input** 
+-   `result` **[Suspendable](#suspendable)&lt;Result, Input>** 
+-   `input` **Input** 
 
 #### Examples
 
@@ -169,8 +169,6 @@ import { refetch } from 'react-suspense-fetch';
 const result = ...; // created by prepare or prefetch
 const newResult = refetch(result, 2);
 ```
-
-[1]: #suspendable
 
 ## Examples
 
@@ -194,4 +192,4 @@ You can also try them in codesandbox.io:
 
 ## Blogs
 
-- [Diving Into React Suspense Render-as-You-Fetch for REST APIs](https://blog.axlight.com/posts/diving-into-react-suspense-render-as-you-fetch-for-rest-apis/)
+-   [Diving Into React Suspense Render-as-You-Fetch for REST APIs](https://blog.axlight.com/posts/diving-into-react-suspense-render-as-you-fetch-for-rest-apis/)
