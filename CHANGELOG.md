@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [0.1.0] - 2020-01-26
+### Changed
+- Implement all proxy handlers (#3)
+
 ## [0.0.4] - 2020-01-08
 ### Added
 - New refetch API
