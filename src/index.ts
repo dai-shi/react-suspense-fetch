@@ -157,6 +157,34 @@ export const prepare: Prepare = <Result extends object, Input, Source>(
       if (state.error) throw state.error;
       return Reflect.ownKeys(state.data as { [key: string]: unknown });
     },
+    getOwnPropertyDescriptor(_target, key) {
+      if (state.promise) throw state.promise;
+      if (state.error) throw state.error;
+      return Reflect.getOwnPropertyDescriptor(state.data as { [key: string]: unknown }, key);
+    },
+    getPrototypeOf() {
+      if (state.promise) throw state.promise;
+      if (state.error) throw state.error;
+      return Object.getPrototypeOf(state.data);
+    },
+    isExtensible() {
+      return false;
+    },
+    preventExtensions() {
+      return true;
+    },
+    setPrototypeOf() {
+      return false;
+    },
+    set() {
+      return false;
+    },
+    defineProperty() {
+      return false;
+    },
+    deleteProperty() {
+      return false;
+    },
   }) as Suspendable<Result, Input | Source>;
 };
 
