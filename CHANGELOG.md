@@ -1,6 +1,8 @@
 # Change Log
 
 ## [Unreleased]
+
+## [0.1.1] - 2020-01-27
 ### Changed
 - Fix isExtensible/preventExtensions trap handlers
 
