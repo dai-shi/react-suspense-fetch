@@ -168,10 +168,10 @@ export const prepare: Prepare = <Result extends object, Input, Source>(
       return Object.getPrototypeOf(state.data);
     },
     isExtensible() {
-      return false;
+      return true;
     },
     preventExtensions() {
-      return true;
+      return false;
     },
     setPrototypeOf() {
       return false;
