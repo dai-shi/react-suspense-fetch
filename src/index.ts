@@ -108,19 +108,21 @@ export const prepare: Prepare = <Result extends object, Input, Source>(
   state.promise = new Promise((resolve) => {
     state.resolve = resolve;
   });
-  const obj = {} as Result;
+  const obj: Partial<Result> = {};
   const start = async (inputOrSource: Input | Source) => {
     state.started = true;
     try {
+      let data: Result;
       if (transformFunc) {
         const input = await transform(transformFunc, inputOrSource as Source);
-        state.data = await fetchFunc(input);
+        data = await fetchFunc(input);
       } else {
-        state.data = await fetchFunc(inputOrSource as Input);
+        data = await fetchFunc(inputOrSource as Input);
       }
-      Object.keys(state.data).forEach((key) => {
-        obj[key as keyof Result] = (state.data as Result)[key as keyof Result];
+      Object.keys(data).forEach((key) => {
+        obj[key as keyof Result] = data[key as keyof Result];
       });
+      state.data = data;
     } catch (e) {
       state.error = e;
     } finally {
