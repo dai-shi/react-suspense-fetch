@@ -1,6 +1,8 @@
 # Change Log
 
 ## [Unreleased]
+
+## [0.2.0] - 2020-02-06
 ### Changed
 - Mutate proxy target object with result (useful for debugging)
 
