@@ -108,6 +108,7 @@ export const prepare: Prepare = <Result extends object, Input, Source>(
   state.promise = new Promise((resolve) => {
     state.resolve = resolve;
   });
+  const obj = {} as Result;
   const start = async (inputOrSource: Input | Source) => {
     state.started = true;
     try {
@@ -117,6 +118,9 @@ export const prepare: Prepare = <Result extends object, Input, Source>(
       } else {
         state.data = await fetchFunc(inputOrSource as Input);
       }
+      Object.keys(state.data).forEach((key) => {
+        obj[key as keyof Result] = (state.data as Result)[key as keyof Result];
+      });
     } catch (e) {
       state.error = e;
     } finally {
@@ -133,7 +137,7 @@ export const prepare: Prepare = <Result extends object, Input, Source>(
   };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const cloneFetch = () => prepare(fetchFunc, transformFunc as any);
-  return new Proxy({}, {
+  return new Proxy(obj, {
     get(_target, key) {
       if (key === RUN_FETCH) return runFetch;
       if (key === CLONE_FETCH) return cloneFetch;
