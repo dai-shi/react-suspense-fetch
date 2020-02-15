@@ -6,12 +6,14 @@
     "module": "esnext",
     "moduleResolution": "node",
     "jsx": "react",
+    "allowJs": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
       "react-suspense-fetch": ["./src"]
-    }
+    },
+    "outDir": "./dist"
   }
 }

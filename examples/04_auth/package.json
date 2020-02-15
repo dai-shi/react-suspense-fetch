@@ -5,7 +5,6 @@
   "dependencies": {
     "@types/react": "latest",
     "@types/react-dom": "latest",
-    "core-js": "latest",
     "react": "experimental",
     "react-dom": "experimental",
     "react-suspense-fetch": "latest",
