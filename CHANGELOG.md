@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [0.2.1] - 2020-03-02
+### Changed
+- Simplify code
+
 ## [0.2.0] - 2020-02-06
 ### Changed
 - Mutate proxy target object with result (useful for debugging)
