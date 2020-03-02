@@ -145,13 +145,7 @@ export const prepare: Prepare = <Result extends object, Input, Source>(
       if (key === CLONE_FETCH) return cloneFetch;
       if (state.promise) throw state.promise;
       if (state.error) throw state.error;
-      const item = (state.data as { [key: string]: unknown })[key as string];
-      if (typeof item === 'function') {
-        // For something like Array.prototype.map
-        // Is there a better way?
-        return (item as Function).bind(state.data);
-      }
-      return item;
+      return (state.data as { [key: string]: unknown })[key as string];
     },
     has(_target, key) {
       if (state.promise) throw state.promise;
