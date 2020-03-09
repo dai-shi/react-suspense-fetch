@@ -12,7 +12,13 @@ The new [Render-as-You-Fetch](https://reactjs.org/docs/concurrent-mode-suspense.
 So far, only Relay implemented that pattern for GraphQL.
 This library aims at implementing that pattern for REST APIs.
 
-This is a highly experimental project. Everything will change.
+This is an experimental library.
+Here's the list of design decisions:
+
+- No React Hooks interface
+- No global cache
+- Primitive API for libraries
+- Making use of Proxies
 
 ## Install
 
