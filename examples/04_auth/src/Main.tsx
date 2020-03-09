@@ -1,9 +1,7 @@
-import React, {
-  useState,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  useTransition,
-} from 'react';
+// eslint-disable-next-line spaced-comment
+/// <reference types="react/experimental" />
+
+import React, { useState, useTransition } from 'react';
 
 import { prefetch } from 'react-suspense-fetch';
 

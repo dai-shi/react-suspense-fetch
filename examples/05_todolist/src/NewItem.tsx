@@ -1,7 +1,8 @@
+// eslint-disable-next-line spaced-comment
+/// <reference types="react/experimental" />
+
 import React, {
   useState,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
   useTransition,
   Dispatch,
   SetStateAction,
