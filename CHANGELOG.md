@@ -1,8 +1,10 @@
 # Change Log
 
 ## [Unreleased]
+
+## [0.3.0] - 2020-12-29
 ### Changed
-- New API and implementation without Proxies
+- [BREAKING CHANGE] New API and implementation without Proxies
 
 ## [0.2.1] - 2020-03-02
 ### Changed
