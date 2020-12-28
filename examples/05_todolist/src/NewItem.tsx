@@ -3,7 +3,7 @@
 
 import React, {
   useState,
-  useTransition,
+  unstable_useTransition as useTransition,
   Dispatch,
   SetStateAction,
 } from 'react';
@@ -17,9 +17,7 @@ type Props = {
 };
 
 const NewItem: React.FC<Props> = ({ setItems }) => {
-  const [startTransition, isPending] = useTransition({
-    timeoutMs: 2000,
-  });
+  const [startTransition, isPending] = useTransition();
   const [name, setName] = useState('');
   const onClick = () => {
     if (!name) return;

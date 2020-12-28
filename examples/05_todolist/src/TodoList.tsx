@@ -1,7 +1,7 @@
 // eslint-disable-next-line spaced-comment
 /// <reference types="react/experimental" />
 
-import React, { useState, useTransition } from 'react';
+import React, { useState, unstable_useTransition as useTransition } from 'react';
 
 import { prefetch } from 'react-suspense-fetch';
 
@@ -11,9 +11,7 @@ import NewItem from './NewItem';
 const initialItems = prefetch(fetchTodos, null);
 
 const TodoList: React.FC = () => {
-  const [startTransition, isPending] = useTransition({
-    timeoutMs: 2000,
-  });
+  const [startTransition, isPending] = useTransition();
   const [items, setItems] = useState<TodoType[]>(initialItems);
   const onClick = () => {
     startTransition(() => {

@@ -1,7 +1,7 @@
 // eslint-disable-next-line spaced-comment
 /// <reference types="react/experimental" />
 
-import React, { useState, useTransition } from 'react';
+import React, { useState, unstable_useTransition as useTransition } from 'react';
 
 import { prefetch } from 'react-suspense-fetch';
 
@@ -25,7 +25,7 @@ const Login: React.FC = () => {
   const [, setAuthState] = useAuthContext();
   const [email, setEmail] = useState('eve.holt@reqres.in');
   const [password, setPassword] = useState('cityslicka');
-  const [startTransition, isPending] = useTransition({ timeoutMs: 1500 });
+  const [startTransition, isPending] = useTransition();
   const onClick = () => {
     startTransition(() => {
       setAuthState(prefetch(loginFunc, { email, password }));

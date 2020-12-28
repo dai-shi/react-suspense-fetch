@@ -1,7 +1,7 @@
 // eslint-disable-next-line spaced-comment
 /// <reference types="react/experimental" />
 
-import React, { useTransition } from 'react';
+import React, { unstable_useTransition as useTransition } from 'react';
 
 import { UserData } from './fetchFuncs';
 
@@ -12,9 +12,7 @@ type Props = {
 };
 
 const DisplayData: React.FC<Props> = ({ id, result, update }) => {
-  const [startTransition, isPending] = useTransition({
-    timeoutMs: 1000,
-  });
+  const [startTransition, isPending] = useTransition();
   const onClick = () => {
     startTransition(() => {
       update(id);

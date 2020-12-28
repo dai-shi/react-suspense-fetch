@@ -22,12 +22,16 @@
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": ["error", { "additionalHooks": "useIsomorphicLayoutEffect" }],
     "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".tsx"] }],
     "react/prop-types": "off",
     "react/jsx-one-expression-per-line": "off",
     "import/extensions": ["error", "never"],
     "import/no-unresolved": ["error", { "ignore": ["react-suspense-fetch"] }],
-    "camelcase": ["error", { "properties": "never", "ignoreDestructuring": false, "allow": ["first_name"] }]
+    "camelcase": ["error", { "properties": "never", "ignoreDestructuring": false, "allow": ["first_name"] }],
+    "@typescript-eslint/ban-types": "off",
+    "no-use-before-define": "off",
+    "no-unused-vars": "off"
   },
   "overrides": [{
     "files": ["__tests__/**/*"],
