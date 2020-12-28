@@ -57,7 +57,7 @@ const Main = () => {
   const [id, setId] = useState('1');
   const result = store.get(id);
   const update = (nextId) => {
-    sotre.prefetch(nextId);
+    store.prefetch(nextId);
     setId(nextId);
   };
   return <DisplayData result={result} update={update} />;
