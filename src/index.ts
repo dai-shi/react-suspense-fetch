@@ -1,6 +1,15 @@
 type FetchFunc<Result, Input> = (input: Input) => Promise<Result>;
 
-type FetchStore<Result, Input> = {
+/**
+ * fetch store
+ *
+ * `get` will throw a promise when a result is not ready.
+ * `prefetch` will start fetching.
+ * `evict` will remove a result.
+ * If `input` is an object, a result will be stored in WeakMap.
+ * Othrewise, a result will be stored in Map.
+ */
+export type FetchStore<Result, Input> = {
   get: (input: Input) => Result;
   prefetch: (input: Input) => void;
   evict: (input: Input) => void;
@@ -20,19 +29,19 @@ const isObject = (x: unknown): x is object => typeof x === 'object' && x !== nul
  */
 export function createFetchStore<Result, Input>(
   fetchFunc: FetchFunc<Result, Input>,
-  preloaded?: { input: Input; result: Result }[],
+  preloaded?: Iterable<readonly [Input, Result]>,
 ) {
   type GetResult = () => Result;
   const cache = new Map<Input, GetResult>();
   const weakCache = new WeakMap<object, GetResult>();
   if (preloaded) {
-    preloaded.forEach((item) => {
-      if (isObject(item.input)) {
-        weakCache.set(item.input, () => item.result);
+    for (const [input, result] of preloaded) {
+      if (isObject(input)) {
+        weakCache.set(input, () => result);
       } else {
-        cache.set(item.input, () => item.result);
+        cache.set(input, () => result);
       }
-    });
+    }
   }
   const createGetResult = (input: Input) => {
     let promise: Promise<void> | null = null;
