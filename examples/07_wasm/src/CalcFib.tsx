@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 
-import { prefetch } from 'react-suspense-fetch';
+import { store } from './fetchFuncs';
 
-import { fetchWasm } from './fetchFuncs';
-
-const calcFib = prefetch(fetchWasm, './slow_fib.wasm');
+const fileName = './slow_fib.wasm';
+store.prefetch(fileName);
 
 const CalcFib: React.FC = () => {
   const [count, setCount] = useState(0);
-  const fib = calcFib.exports.fib(count);
+  const fib = store.get(fileName).exports.fib(count);
   return (
     <div>
       <div>fib({count}) = {fib}</div>

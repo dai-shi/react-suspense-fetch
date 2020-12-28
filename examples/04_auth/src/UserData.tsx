@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { prepare, run } from 'react-suspense-fetch';
+import { createFetchStore } from 'react-suspense-fetch';
 
 import { useAuthContext } from './AuthContext';
 
@@ -14,17 +14,15 @@ const fetchUserDataFunc = async (token: string) => {
   return data as { data: { id: number; name: string }[] };
 };
 
-const extractToken = (authState: { token: string }) => authState.token;
-
-const UserItems = prepare(fetchUserDataFunc, extractToken);
+const userDataStore = createFetchStore(fetchUserDataFunc);
 
 const UserData: React.FC = () => {
   const [authState] = useAuthContext();
   if (!authState) throw new Error('no authState');
-  run(UserItems, authState);
+  const result = userDataStore.get(authState.getToken());
   return (
     <ul>
-      {UserItems.data.map((item) => (
+      {result.data.map((item) => (
         <li key={item.id}>{item.name}</li>
       ))}
     </ul>

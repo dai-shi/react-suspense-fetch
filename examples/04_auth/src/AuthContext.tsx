@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 
-const useAuthState = () => useState<{ token: string } | null>(null);
+const useAuthState = () => useState<({ getToken: () => string }) | null>(null);
 
 const AuthContext = createContext<ReturnType<typeof useAuthState>>([
   null,

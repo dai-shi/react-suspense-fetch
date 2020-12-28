@@ -9,7 +9,7 @@ const UserPage = React.lazy(() => import('./UserPage'));
 
 const urlParams = new URLSearchParams(window.location.search);
 const initialId = urlParams.get('id');
-const initialPage = initialId ? <UserPage user={fetchUserData(initialId)} /> : null;
+const initialPage = initialId ? <UserPage getUser={fetchUserData(initialId)} /> : null;
 
 const Main: React.FC = () => {
   const [startTransition, isPending] = useTransition();
@@ -19,7 +19,7 @@ const Main: React.FC = () => {
     startTransition(() => {
       const nextId = userId ? String(Number(userId) + 1) : '1';
       setUserId(nextId);
-      setPage(<UserPage user={fetchUserData(nextId)} />);
+      setPage(<UserPage getUser={fetchUserData(nextId)} />);
     });
   };
   return (

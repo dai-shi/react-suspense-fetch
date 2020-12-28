@@ -1,17 +1,14 @@
 import React from 'react';
 
-import { run, Suspendable } from 'react-suspense-fetch';
-
-import { FetchResult } from './fetchFuncs';
+import { store } from './fetchFuncs';
 import DisplayData from './DisplayData';
 
 type Props = {
   id: string;
-  result: Suspendable<FetchResult, string>;
 };
 
-const Item: React.FC<Props> = ({ id, result }) => {
-  run(result, id); // only effective for the first render
+const Item: React.FC<Props> = ({ id }) => {
+  const result = store.get(id);
   return (
     <div>
       User ID: {id}

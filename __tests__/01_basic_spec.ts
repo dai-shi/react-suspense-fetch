@@ -1,15 +1,9 @@
 import {
-  prepare,
-  run,
-  prefetch,
-  refetch,
+  createFetchStore,
 } from '../src/index';
 
 describe('basic spec', () => {
   it('exported function', () => {
-    expect(prepare).toBeDefined();
-    expect(run).toBeDefined();
-    expect(prefetch).toBeDefined();
-    expect(refetch).toBeDefined();
+    expect(createFetchStore).toBeDefined();
   });
 });

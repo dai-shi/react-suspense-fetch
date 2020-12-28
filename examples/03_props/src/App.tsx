@@ -1,21 +1,23 @@
 import React, { Suspense } from 'react';
 
-import { prepare } from 'react-suspense-fetch';
-
-import { fetchFunc } from './fetchFuncs';
+import { store } from './fetchFuncs';
 import Item from './Item';
 
 const items = [
-  { id: '1', result: prepare(fetchFunc) },
-  { id: '2', result: prepare(fetchFunc) },
-  { id: '3', result: prepare(fetchFunc) },
+  { id: '1' },
+  { id: '2' },
+  { id: '3' },
 ];
+
+store.prefetch('1');
+store.prefetch('2');
+store.prefetch('3');
 
 const App: React.FC = () => (
   <Suspense fallback={<span>Loading...</span>}>
-    {items.map(({ id, result }) => (
+    {items.map(({ id }) => (
       <div key={id}>
-        <Item id={id} result={result} />
+        <Item id={id} />
         <hr />
       </div>
     ))}

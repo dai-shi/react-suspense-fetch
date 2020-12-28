@@ -3,19 +3,17 @@
 
 import React, { useState, unstable_useTransition as useTransition } from 'react';
 
-import { prefetch } from 'react-suspense-fetch';
-
-import { fetchTodos, TodoType } from './fetchFuncs';
+import { fetchTodosStore, TodoType } from './fetchFuncs';
 import NewItem from './NewItem';
 
-const initialItems = prefetch(fetchTodos, null);
+fetchTodosStore.prefetch(null);
 
 const TodoList: React.FC = () => {
   const [startTransition, isPending] = useTransition();
-  const [items, setItems] = useState<TodoType[]>(initialItems);
+  const [items, setItems] = useState<TodoType[]>(fetchTodosStore.get(null));
   const onClick = () => {
     startTransition(() => {
-      setItems(prefetch(fetchTodos, null));
+      setItems(() => fetchTodosStore.get(null));
     });
   };
   return (

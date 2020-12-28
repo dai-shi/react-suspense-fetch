@@ -8,9 +8,7 @@ import React, {
   SetStateAction,
 } from 'react';
 
-import { prefetch } from 'react-suspense-fetch';
-
-import { createTodo, TodoType } from './fetchFuncs';
+import { createTodoStore, TodoType } from './fetchFuncs';
 
 type Props = {
   setItems: Dispatch<SetStateAction<TodoType[]>>;
@@ -22,7 +20,7 @@ const NewItem: React.FC<Props> = ({ setItems }) => {
   const onClick = () => {
     if (!name) return;
     startTransition(() => {
-      setItems((prev) => [...prev, prefetch(createTodo, name)]);
+      setItems((prev) => [...prev, createTodoStore.get(name)]);
       setName('');
     });
   };

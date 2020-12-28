@@ -1,12 +1,10 @@
-import React, { Suspense, useState, useTransition } from 'react';
+import React, { Suspense, useState, unstable_useTransition as useTransition } from 'react';
 import ReactDOM from 'react-dom';
 
-import { prefetch, refetch } from 'react-suspense-fetch';
+import { createFetchStore } from 'react-suspense-fetch';
 
 const DisplayData = ({ result, update }) => {
-  const [startTransition, isPending] = useTransition({
-    timeoutMs: 1000,
-  });
+  const [startTransition, isPending] = useTransition();
   const onClick = () => {
     startTransition(() => {
       update('2');
@@ -22,12 +20,15 @@ const DisplayData = ({ result, update }) => {
 };
 
 const fetchFunc = async (userId) => (await fetch(`https://reqres.in/api/users/${userId}?delay=3`)).json();
-const initialResult = prefetch(fetchFunc, '1');
+const store = createFetchStore(fetchFunc);
+store.prefetch('1');
 
 const Main = () => {
-  const [result, setResult] = useState(initialResult);
-  const update = (id) => {
-    setResult(refetch(result, id));
+  const [id, setId] = useState('1');
+  const result = store.get(id);
+  const update = (nextId) => {
+    store.prefetch(nextId);
+    setId(nextId);
   };
   return <DisplayData result={result} update={update} />;
 };
@@ -38,4 +39,4 @@ const App = () => (
   </Suspense>
 );
 
-ReactDOM.createRoot(document.getElementById('app')).render(<App />);
+ReactDOM.unstable_createRoot(document.getElementById('app')).render(<App />);

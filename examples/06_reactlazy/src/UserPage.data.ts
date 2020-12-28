@@ -1,4 +1,4 @@
-import { prefetch } from 'react-suspense-fetch';
+import { createFetchStore } from 'react-suspense-fetch';
 
 export type UserData = {
   data: {
@@ -9,4 +9,9 @@ export type UserData = {
 
 const fetchFunc = async (userId: string) => (await fetch(`https://reqres.in/api/users/${userId}?delay=3`)).json();
 
-export const fetchUserData = (userId: string) => prefetch(fetchFunc, userId);
+const fetchStore = createFetchStore(fetchFunc);
+
+export const fetchUserData = (userId: string) => {
+  fetchStore.prefetch(userId);
+  return () => fetchStore.get(userId);
+};

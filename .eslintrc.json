@@ -30,6 +30,7 @@
     "import/no-unresolved": ["error", { "ignore": ["react-suspense-fetch"] }],
     "camelcase": ["error", { "properties": "never", "ignoreDestructuring": false, "allow": ["first_name"] }],
     "@typescript-eslint/ban-types": "off",
+    "import/prefer-default-export": "off",
     "no-use-before-define": "off",
     "no-unused-vars": "off"
   },

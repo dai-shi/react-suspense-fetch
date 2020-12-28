@@ -3,7 +3,7 @@
 
 import React, { useState, unstable_useTransition as useTransition } from 'react';
 
-import { prefetch } from 'react-suspense-fetch';
+import { createFetchStore } from 'react-suspense-fetch';
 
 import { useAuthContext } from './AuthContext';
 import UserData from './UserData';
@@ -21,6 +21,8 @@ const loginFunc = async ({ email, password }: { email: string; password: string 
   return data as { token: string };
 };
 
+const loginStore = createFetchStore(loginFunc);
+
 const Login: React.FC = () => {
   const [, setAuthState] = useAuthContext();
   const [email, setEmail] = useState('eve.holt@reqres.in');
@@ -28,7 +30,9 @@ const Login: React.FC = () => {
   const [startTransition, isPending] = useTransition();
   const onClick = () => {
     startTransition(() => {
-      setAuthState(prefetch(loginFunc, { email, password }));
+      const auth = { email, password };
+      loginStore.prefetch(auth);
+      setAuthState({ getToken: () => loginStore.get(auth).token });
     });
   };
   return (
