@@ -1,8 +1,8 @@
 # react-suspense-fetch
 
-[![Build Status](https://travis-ci.com/dai-shi/react-suspense-fetch.svg?branch=master)](https://travis-ci.com/dai-shi/react-suspense-fetch)
-[![npm version](https://badge.fury.io/js/react-suspense-fetch.svg)](https://badge.fury.io/js/react-suspense-fetch)
-[![bundle size](https://badgen.net/bundlephobia/minzip/react-suspense-fetch)](https://bundlephobia.com/result?p=react-suspense-fetch)
+[![CI](https://img.shields.io/github/workflow/status/dai-shi/react-suspense-fetch/CI)](https://github.com/dai-shi/react-suspense-fetch/actions?query=workflow%3ACI)
+[![npm](https://img.shields.io/npm/v/react-suspense-fetch)](https://www.npmjs.com/package/react-suspense-fetch)
+[![size](https://img.shields.io/bundlephobia/minzip/react-suspense-fetch)](https://bundlephobia.com/result?p=react-suspense-fetch)
 
 A primitive library for React Suspense Render-as-You-Fetch
 
