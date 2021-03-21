@@ -95,7 +95,7 @@ export function createFetchStore<Result, Input>(
   };
   const refetch = (input: Input) => {
     evict(input);
-    return _get(input);
+    return getRes(input);
   };
   const store: FetchStore<Result, Input> = {
     prefetch,
