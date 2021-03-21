@@ -101,6 +101,7 @@ export function createFetchStore<Result, Input>(
     prefetch,
     evict,
     get: _get,
+    refetch
   };
   return store;
 }
