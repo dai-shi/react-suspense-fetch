@@ -83,7 +83,7 @@ export function createFetchStore<Result, Input>(
       cache.delete(input);
     }
   };
-  const _get = (input: Input) => {
+  const getRes = (input: Input) => {
     let getResult = isObject(input) ? weakCache.get(input) : cache.get(input);
     if (!getResult) {
       prefetch(input);
@@ -92,7 +92,7 @@ export function createFetchStore<Result, Input>(
       ) as GetResult;
     }
     return getResult();
-  }
+  };
   const refetch = (input: Input) => {
     evict(input);
     return _get(input);
@@ -100,8 +100,8 @@ export function createFetchStore<Result, Input>(
   const store: FetchStore<Result, Input> = {
     prefetch,
     evict,
-    get: _get,
-    refetch
+    get: getRes,
+    refetch,
   };
   return store;
 }
