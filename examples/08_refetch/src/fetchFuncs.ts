@@ -16,10 +16,10 @@ export const store = createFetchStore(fetchUser);
 
 export const mutate = (userId: string, first_name: string) => {
   return fetch(`https://reqres.in/api/users/${userId}?delay=3`, {
-    method: 'PUT',
+    method: "PUT",
     body: JSON.stringify({ first_name }),
   }).then((res)) => {
-    store.refetch(userId)
+    store.refetch(userId);
     return res;
   });
 };

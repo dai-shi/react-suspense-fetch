@@ -17,8 +17,9 @@ export type FetchStore<Result, Input> = {
   refetch: (input: Input) => void;
 };
 
-const isObject = (x: unknown): x is object =>
-  typeof x === 'object' && x !== null;
+const isObject = (x: unknown): x is object => {
+  return typeof x === 'object' && x !== null;
+};
 
 /**
  * create fetch store
