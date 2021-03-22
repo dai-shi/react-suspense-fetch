@@ -8,16 +8,17 @@ type FetchFunc<Result, Input> = (input: Input) => Promise<Result>;
  * `evict` will remove a result.
  * `refetch` will evict a result and fetch it again.
  * If `input` is an object, a result will be stored in WeakMap.
- * Othrewise, a result will be stored in Map.
+ * Otherwise, a result will be stored in Map.
  */
 export type FetchStore<Result, Input> = {
   get: (input: Input) => Result;
   prefetch: (input: Input) => void;
   evict: (input: Input) => void;
-  refetch: (input: Input) => Result;
+  refetch: (input: Input) => void;
 };
 
-const isObject = (x: unknown): x is object => typeof x === 'object' && x !== null;
+const isObject = (x: unknown): x is object =>
+  typeof x === 'object' && x !== null;
 
 /**
  * create fetch store
@@ -87,15 +88,15 @@ export function createFetchStore<Result, Input>(
     let getResult = isObject(input) ? weakCache.get(input) : cache.get(input);
     if (!getResult) {
       prefetch(input);
-      getResult = (
-        isObject(input) ? weakCache.get(input) : cache.get(input)
-      ) as GetResult;
+      getResult = (isObject(input)
+        ? weakCache.get(input)
+        : cache.get(input)) as GetResult;
     }
     return getResult();
   };
   const refetch = (input: Input) => {
     evict(input);
-    return getRes(input);
+    prefetch(input);
   };
   const store: FetchStore<Result, Input> = {
     prefetch,

@@ -26,14 +26,14 @@ const DisplayData: React.FC<Props> = ({ result, update }) => {
       <div>
         First Name:{' '}
         <input
-          type="text"
+          type='text'
           value={first_name}
           onChange={(e) => {
             setFirstName(e.target.value);
           }}
         />
       </div>
-      <button type="button" onClick={onClick}>
+      <button type='button' onClick={onClick}>
         Update
       </button>
       {isPending && 'Pending...'}
