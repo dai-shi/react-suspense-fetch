@@ -11,9 +11,7 @@ const Item: React.FC<Props> = ({ initialId }) => {
   const [text, setText] = useState(initialId);
   const result = store.get(text);
   const update = (first_name: string) => {
-    mutate(text, first_name).then(() => {
-      store.refetch(text);
-    });
+    mutate(text, first_name);
   };
   return (
     <div>
