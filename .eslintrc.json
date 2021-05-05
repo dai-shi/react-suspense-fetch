@@ -33,7 +33,8 @@
     "import/prefer-default-export": "off",
     "no-restricted-syntax": "off",
     "no-use-before-define": "off",
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "no-redeclare": "off"
   },
   "overrides": [{
     "files": ["__tests__/**/*"],

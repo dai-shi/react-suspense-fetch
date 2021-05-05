@@ -17,6 +17,72 @@ export type FetchStore<Result, Input> = {
 
 const isObject = (x: unknown): x is object => typeof x === 'object' && x !== null;
 
+const createMapLikeWithComparator = <K, V>(areEqual: (a: K, b: K) => boolean) => {
+  const map = new Map<K, V>();
+  const has = (key: K) => {
+    for (const [k] of map) {
+      if (areEqual(k, key)) {
+        return true;
+      }
+    }
+    return false;
+  };
+  const get = (key: K) => {
+    for (const [k, v] of map) {
+      if (areEqual(k, key)) {
+        return v;
+      }
+    }
+    return undefined;
+  };
+  const remove = (key: K) => {
+    for (const [k] of map) {
+      if (areEqual(k, key)) {
+        map.delete(k);
+      }
+    }
+  };
+  return {
+    set: (key: K, value: V) => { map.set(key, value); },
+    has,
+    get,
+    delete: remove,
+  };
+};
+
+const createCache = <Input, GetResult>(
+  cacheType?:
+    | { type: 'WeakMap'}
+    | {
+      type: 'Map';
+      areEqual?: ((a: Input, b: Input) => boolean);
+    },
+) => {
+  if (cacheType?.type === 'WeakMap') {
+    return new WeakMap<object, GetResult>() as unknown as Map<Input, GetResult>;
+  }
+  const areEqual = cacheType?.type === 'Map' && cacheType.areEqual;
+  if (areEqual) {
+    return createMapLikeWithComparator<Input, GetResult>(areEqual);
+  }
+  return new Map<Input, GetResult>();
+};
+
+export function createFetchStore<Result, Input extends object>(
+  fetchFunc: FetchFunc<Result, Input>,
+  cacheType: { type: 'WeakMap' },
+  preloaded?: Iterable<readonly [Input, Result]>,
+): FetchStore<Result, Input>
+
+export function createFetchStore<Result, Input>(
+  fetchFunc: FetchFunc<Result, Input>,
+  cacheType?: {
+    type: 'Map';
+    areEqual?: ((a: Input, b: Input) => boolean);
+  },
+  preloaded?: Iterable<readonly [Input, Result]>,
+): FetchStore<Result, Input>
+
 /**
  * create fetch store
  *
@@ -29,18 +95,25 @@ const isObject = (x: unknown): x is object => typeof x === 'object' && x !== nul
  */
 export function createFetchStore<Result, Input>(
   fetchFunc: FetchFunc<Result, Input>,
+  cacheType?:
+    | { type: 'WeakMap'}
+    | {
+      type: 'Map';
+      areEqual?: ((a: Input, b: Input) => boolean);
+    },
   preloaded?: Iterable<readonly [Input, Result]>,
 ) {
   type GetResult = () => Result;
-  const cache = new Map<Input, GetResult>();
-  const weakCache = new WeakMap<object, GetResult>();
+  const cache = createCache<Input, GetResult>(cacheType);
+  const assertObjectInput = (input: Input) => {
+    if (cacheType?.type === 'WeakMap' && !isObject(input)) {
+      throw new Error('WeakMap requires object input');
+    }
+  };
   if (preloaded) {
     for (const [input, result] of preloaded) {
-      if (isObject(input)) {
-        weakCache.set(input, () => result);
-      } else {
-        cache.set(input, () => result);
-      }
+      assertObjectInput(input);
+      cache.set(input, () => result);
     }
   }
   const createGetResult = (input: Input) => {
@@ -64,33 +137,24 @@ export function createFetchStore<Result, Input>(
     return getResult;
   };
   const prefetch = (input: Input) => {
-    if (isObject(input)) {
-      if (!weakCache.has(input)) {
-        weakCache.set(input, createGetResult(input));
-      }
-      return;
-    }
+    assertObjectInput(input);
     if (!cache.has(input)) {
       cache.set(input, createGetResult(input));
     }
   };
   const evict = (input: Input) => {
-    if (isObject(input)) {
-      weakCache.delete(input);
-    } else {
-      cache.delete(input);
-    }
+    assertObjectInput(input);
+    cache.delete(input);
   };
   const store: FetchStore<Result, Input> = {
     prefetch,
     evict,
     get: (input: Input) => {
-      let getResult = isObject(input) ? weakCache.get(input) : cache.get(input);
+      assertObjectInput(input);
+      let getResult = cache.get(input);
       if (!getResult) {
         prefetch(input);
-        getResult = (
-          isObject(input) ? weakCache.get(input) : cache.get(input)
-        ) as GetResult;
+        getResult = cache.get(input) as GetResult;
       }
       return getResult();
     },
