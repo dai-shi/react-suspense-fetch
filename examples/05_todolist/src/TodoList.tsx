@@ -9,7 +9,7 @@ import NewItem from './NewItem';
 fetchTodosStore.prefetch(null);
 
 const TodoList: React.FC = () => {
-  const [startTransition, isPending] = useTransition();
+  const [isPending, startTransition] = useTransition() as any; // FIXME
   const [items, setItems] = useState<TodoType[]>(fetchTodosStore.get(null));
   const onClick = () => {
     startTransition(() => {

@@ -15,7 +15,7 @@ type Props = {
 };
 
 const NewItem: React.FC<Props> = ({ setItems }) => {
-  const [startTransition, isPending] = useTransition();
+  const [isPending, startTransition] = useTransition() as any; // FIXME
   const [name, setName] = useState('');
   const onClick = () => {
     if (!name) return;

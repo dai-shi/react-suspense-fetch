@@ -12,7 +12,7 @@ const initialId = urlParams.get('id');
 const initialPage = initialId ? <UserPage getUser={fetchUserData(initialId)} /> : null;
 
 const Main: React.FC = () => {
-  const [startTransition, isPending] = useTransition();
+  const [isPending, startTransition] = useTransition() as any; // FIXME
   const [userId, setUserId] = useState(initialId);
   const [page, setPage] = useState(initialPage);
   const onClick = () => {

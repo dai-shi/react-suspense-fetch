@@ -27,7 +27,7 @@ const Login: React.FC = () => {
   const [, setAuthState] = useAuthContext();
   const [email, setEmail] = useState('eve.holt@reqres.in');
   const [password, setPassword] = useState('cityslicka');
-  const [startTransition, isPending] = useTransition();
+  const [isPending, startTransition] = useTransition() as any; // FIXME
   const onClick = () => {
     startTransition(() => {
       const auth = { email, password };

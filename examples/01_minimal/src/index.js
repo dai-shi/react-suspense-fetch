@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { createFetchStore } from 'react-suspense-fetch';
 
 const DisplayData = ({ result, update }) => {
-  const [startTransition, isPending] = useTransition();
+  const [isPending, startTransition] = useTransition();
   const onClick = () => {
     startTransition(() => {
       update('2');

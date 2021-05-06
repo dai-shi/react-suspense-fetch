@@ -12,7 +12,7 @@ type Props = {
 };
 
 const DisplayData: React.FC<Props> = ({ id, result, update }) => {
-  const [startTransition, isPending] = useTransition();
+  const [isPending, startTransition] = useTransition() as any; // FIXME
   const onClick = () => {
     startTransition(() => {
       update(id);
