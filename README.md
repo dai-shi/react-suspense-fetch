@@ -102,6 +102,7 @@ create fetch store
 #### Parameters
 
 -   `fetchFunc` **FetchFunc&lt;Result, Input>** 
+-   `cacheType` **({type: `"WeakMap"`} | {type: `"Map"`, areEqual: function (a: Input, b: Input): [boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?})?** 
 -   `preloaded` **Iterable&lt;any>?** 
 
 #### Examples
