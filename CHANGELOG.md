@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [0.4.0] - 2021-05-06
+### Changed
+- [BREAKING CHANGE] New API option for three cache types (#19)
+
 ## [0.3.0] - 2020-12-29
 ### Changed
 - [BREAKING CHANGE] New API and implementation without Proxies
