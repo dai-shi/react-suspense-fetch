@@ -16,9 +16,9 @@ This library aims at implementing that pattern for REST APIs.
 This is an experimental library.
 Here's the list of design decisions:
 
--   No React Hooks interface
--   No global cache
--   Primitive API for libraries
+*   No React Hooks interface
+*   No global cache
+*   Primitive API for libraries
 
 ## Install
 
@@ -84,16 +84,20 @@ fetch store
 `get` will throw a promise when a result is not ready.
 `prefetch` will start fetching.
 `evict` will remove a result.
-If `input` is an object, a result will be stored in WeakMap.
-Othrewise, a result will be stored in Map.
+
+There are three cache types:
+
+*   WeakMap: `input` has to be an object in this case
+*   Map: you need to call evict to remove from cache
+*   Map with areEqual: you can specify a custom comparator
 
 Type: {get: function (input: Input): Result, prefetch: function (input: Input): void, evict: function (input: Input): void}
 
 #### Properties
 
--   `get` **function (input: Input): Result** 
--   `prefetch` **function (input: Input): void** 
--   `evict` **function (input: Input): void** 
+*   `get` **function (input: Input): Result** 
+*   `prefetch` **function (input: Input): void** 
+*   `evict` **function (input: Input): void** 
 
 ### createFetchStore
 
@@ -101,9 +105,9 @@ create fetch store
 
 #### Parameters
 
--   `fetchFunc` **FetchFunc&lt;Result, Input>** 
--   `cacheType` **({type: `"WeakMap"`} | {type: `"Map"`, areEqual: function (a: Input, b: Input): [boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?})?** 
--   `preloaded` **Iterable&lt;any>?** 
+*   `fetchFunc` **FetchFunc\<Result, Input>** 
+*   `cacheType` **({type: `"WeakMap"`} | {type: `"Map"`, areEqual: function (a: Input, b: Input): [boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?})?** 
+*   `preloaded` **Iterable\<any>?** 
 
 #### Examples
 
@@ -127,14 +131,14 @@ PORT=8080 npm run examples:01_minimal
 and open <http://localhost:8080> in your web browser.
 
 You can also try them in codesandbox.io:
-[01](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/01_minimal)
-[02](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/02_typescript)
-[03](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/03_props)
-[04](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/04_auth)
-[05](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/05_todolist)
-[06](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/06_reactlazy)
-[07](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/07_wasm)
+[01](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/01\_minimal)
+[02](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/02\_typescript)
+[03](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/03\_props)
+[04](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/04\_auth)
+[05](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/05\_todolist)
+[06](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/06\_reactlazy)
+[07](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/07\_wasm)
 
 ## Blogs
 
--   [Diving Into React Suspense Render-as-You-Fetch for REST APIs](https://blog.axlight.com/posts/diving-into-react-suspense-render-as-you-fetch-for-rest-apis/)
+*   [Diving Into React Suspense Render-as-You-Fetch for REST APIs](https://blog.axlight.com/posts/diving-into-react-suspense-render-as-you-fetch-for-rest-apis/)

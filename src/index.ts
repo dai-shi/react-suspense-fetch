@@ -6,8 +6,11 @@ type FetchFunc<Result, Input> = (input: Input) => Promise<Result>;
  * `get` will throw a promise when a result is not ready.
  * `prefetch` will start fetching.
  * `evict` will remove a result.
- * If `input` is an object, a result will be stored in WeakMap.
- * Othrewise, a result will be stored in Map.
+ *
+ * There are three cache types:
+ * - WeakMap: `input` has to be an object in this case
+ * - Map: you need to call evict to remove from cache
+ * - Map with areEqual: you can specify a custom comparator
  */
 export type FetchStore<Result, Input> = {
   get: (input: Input) => Result;
