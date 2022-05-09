@@ -33,13 +33,13 @@
     "jest": "jest --preset ts-jest/presets/js-with-ts __tests__/*.ts",
     "tsc-test": "tsc --project . --noEmit",
     "apidoc": "documentation readme --section API --markdown-toc false --parse-extension ts src/*.ts",
-    "examples:01_minimal": "DIR=01_minimal EXT=js webpack-cli serve",
-    "examples:02_typescript": "DIR=02_typescript webpack-cli serve",
-    "examples:03_props": "DIR=03_props webpack-cli serve",
-    "examples:04_auth": "DIR=04_auth webpack-cli serve",
-    "examples:05_todolist": "DIR=05_todolist webpack-cli serve",
-    "examples:06_reactlazy": "DIR=06_reactlazy webpack-cli serve",
-    "examples:07_wasm": "DIR=07_wasm webpack-cli serve"
+    "examples:01_minimal": "DIR=01_minimal EXT=js webpack serve",
+    "examples:02_typescript": "DIR=02_typescript webpack serve",
+    "examples:03_props": "DIR=03_props webpack serve",
+    "examples:04_auth": "DIR=04_auth webpack serve",
+    "examples:05_todolist": "DIR=05_todolist webpack serve",
+    "examples:06_reactlazy": "DIR=06_reactlazy webpack serve",
+    "examples:07_wasm": "DIR=07_wasm webpack serve"
   },
   "keywords": [
     "react",
