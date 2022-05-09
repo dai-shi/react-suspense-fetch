@@ -5,20 +5,16 @@
 [![size](https://img.shields.io/bundlephobia/minzip/react-suspense-fetch)](https://bundlephobia.com/result?p=react-suspense-fetch)
 [![discord](https://img.shields.io/discord/627656437971288081)](https://discord.gg/MrQdmzd)
 
-A primitive library for React Suspense Render-as-You-Fetch
+A primitive library for React Suspense for Data Fetching
 
 ## Introduction
 
-The new [Render-as-You-Fetch](https://reactjs.org/docs/concurrent-mode-suspense.html#approach-3-render-as-you-fetch-using-suspense) pattern is mind-blowing.
-So far, only Relay implemented that pattern for GraphQL.
-This library aims at implementing that pattern for REST APIs.
+React 18 comes with Suspense (sort of),
+but Suspense for Data Fetching is left for data frameworks.
+The goal of this library is to provide a thin API
+to allow Suspense For Data Fetching without richer frameworks.
 
-This is an experimental library.
-Here's the list of design decisions:
-
-*   No React Hooks interface
-*   No global cache
-*   Primitive API for libraries
+Project status: Experimental. API should mostly be good, but we need to establish its usage.
 
 ## Install
 
@@ -29,11 +25,32 @@ npm install react-suspense-fetch
 ## Usage
 
 ```javascript
-import React, { Suspense, useState, unstable_useTransition as useTransition } from 'react';
-import ReactDOM from 'react-dom';
+import React, { Suspense, useState, useTransition } from 'react';
+import { createRoot } from 'react-dom/client';
 
 import { createFetchStore } from 'react-suspense-fetch';
 
+// 1️⃣
+// Create a store with an async function.
+// The async function can take one input argument.
+// The input value becomes the "key" of cache.
+// By default, keys are compared with strict equal `===`.
+const store = createFetchStore(async (userId) => {
+  const res = await fetch(`https://reqres.in/api/users/${userId}?delay=3`);
+  const data = await res.json();
+  return data;
+});
+
+// 2️⃣
+// Prefetch data for the initial data.
+// We should prefetch data before getting the result.
+// In this example, it's done at module level, which might not be ideal.
+// Some initialization function would be a good place.
+// We could do it in render function of a component close to root in the tree.
+store.prefetch('1');
+
+// 3️⃣
+// When updating, wrap with startTransition to lower the priority.
 const DisplayData = ({ result, update }) => {
   const [isPending, startTransition] = useTransition();
   const onClick = () => {
@@ -50,10 +67,8 @@ const DisplayData = ({ result, update }) => {
   );
 };
 
-const fetchFunc = async userId => (await fetch(`https://reqres.in/api/users/${userId}?delay=3`)).json();
-const store = createFetchStore(fetchFunc);
-store.prefetch('1');
-
+// 4️⃣
+// We should prefetch new data in an event handler.
 const Main = () => {
   const [id, setId] = useState('1');
   const result = store.get(id);
@@ -64,13 +79,16 @@ const Main = () => {
   return <DisplayData result={result} update={update} />;
 };
 
+// 5️⃣
+// Suspense boundary is required somewhere in the tree.
+// We can have many Suspense components at different levels.
 const App = () => (
   <Suspense fallback={<span>Loading...</span>}>
     <Main />
   </Suspense>
 );
 
-ReactDOM.unstable_createRoot(document.getElementById('app')).render(<App />);
+createRoot(document.getElementById('app')).render(<App />);
 ```
 
 ## API
