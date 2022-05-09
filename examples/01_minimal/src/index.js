@@ -1,5 +1,5 @@
-import React, { Suspense, useState, unstable_useTransition as useTransition } from 'react';
-import ReactDOM from 'react-dom';
+import React, { Suspense, useState, useTransition } from 'react';
+import { createRoot } from 'react-dom/client';
 
 import { createFetchStore } from 'react-suspense-fetch';
 
@@ -39,4 +39,4 @@ const App = () => (
   </Suspense>
 );
 
-ReactDOM.unstable_createRoot(document.getElementById('app')).render(<App />);
+createRoot(document.getElementById('app')).render(<App />);
