@@ -149,13 +149,13 @@ PORT=8080 npm run examples:01_minimal
 and open <http://localhost:8080> in your web browser.
 
 You can also try them in codesandbox.io:
-[01](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/01\_minimal)
-[02](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/02\_typescript)
-[03](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/03\_props)
-[04](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/04\_auth)
-[05](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/05\_todolist)
-[06](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/06\_reactlazy)
-[07](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/master/examples/07\_wasm)
+[01](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/main/examples/01\_minimal)
+[02](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/main/examples/02\_typescript)
+[03](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/main/examples/03\_props)
+[04](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/main/examples/04\_auth)
+[05](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/main/examples/05\_todolist)
+[06](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/main/examples/06\_reactlazy)
+[07](https://codesandbox.io/s/github/dai-shi/react-suspense-fetch/tree/main/examples/07\_wasm)
 
 ## Blogs
 
