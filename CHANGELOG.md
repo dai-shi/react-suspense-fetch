@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [0.4.1] - 2022-05-09
+### Changed
+- Update dependencies, examples and README for React 18
+
 ## [0.4.0] - 2021-05-06
 ### Changed
 - [BREAKING CHANGE] New API option for three cache types (#19)
