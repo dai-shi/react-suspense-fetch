@@ -53,13 +53,15 @@ const createMapLikeWithComparator = <K, V>(areEqual: (a: K, b: K) => boolean) =>
   };
 };
 
+type CacheType<Input> =
+  | { type: 'WeakMap'}
+  | {
+    type: 'Map';
+    areEqual?: ((a: Input, b: Input) => boolean);
+  };
+
 const createCache = <Input, GetResult>(
-  cacheType?:
-    | { type: 'WeakMap'}
-    | {
-      type: 'Map';
-      areEqual?: ((a: Input, b: Input) => boolean);
-    },
+  cacheType?: CacheType<Input>,
 ) => {
   if (cacheType?.type === 'WeakMap') {
     return new WeakMap<object, GetResult>() as unknown as Map<Input, GetResult>;
@@ -98,12 +100,7 @@ export function createFetchStore<Result, Input>(
  */
 export function createFetchStore<Result, Input>(
   fetchFunc: FetchFunc<Result, Input>,
-  cacheType?:
-    | { type: 'WeakMap'}
-    | {
-      type: 'Map';
-      areEqual?: ((a: Input, b: Input) => boolean);
-    },
+  cacheType?: CacheType<Input>,
   preloaded?: Iterable<readonly [Input, Result]>,
 ) {
   type GetResult = () => Result;
