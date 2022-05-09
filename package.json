@@ -30,7 +30,7 @@
     "postcompile": "cp dist/index.modern.js dist/index.modern.mjs && cp dist/index.modern.js.map dist/index.modern.mjs.map",
     "test": "run-s eslint tsc-test jest",
     "eslint": "eslint --ext .js,.ts,.tsx --ignore-pattern dist .",
-    "jest": "jest --preset ts-jest/presets/js-with-ts __tests__/*.ts",
+    "jest": "jest",
     "tsc-test": "tsc --project . --noEmit",
     "apidoc": "documentation readme --section API --markdown-toc false --parse-extension ts src/*.ts",
     "examples:01_minimal": "DIR=01_minimal EXT=js webpack serve",
@@ -40,6 +40,10 @@
     "examples:05_todolist": "DIR=05_todolist webpack serve",
     "examples:06_reactlazy": "DIR=06_reactlazy webpack serve",
     "examples:07_wasm": "DIR=07_wasm webpack serve"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "preset": "ts-jest/presets/js-with-ts"
   },
   "keywords": [
     "react",
