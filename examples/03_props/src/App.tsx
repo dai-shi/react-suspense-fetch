@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
 
-import { store } from './fetchFuncs';
-import Item from './Item';
+import Main from './Main';
 
 const items = [
   { id: '1' },
@@ -9,18 +8,9 @@ const items = [
   { id: '3' },
 ];
 
-store.prefetch('1');
-store.prefetch('2');
-store.prefetch('3');
-
 const App = () => (
   <Suspense fallback={<span>Loading...</span>}>
-    {items.map(({ id }) => (
-      <div key={id}>
-        <Item id={id} />
-        <hr />
-      </div>
-    ))}
+    <Main items={items} />
   </Suspense>
 );
 
