@@ -5,7 +5,7 @@ import { store } from './fetchFuncs';
 const fileName = './slow_fib.wasm';
 store.prefetch(fileName);
 
-const CalcFib: React.FC = () => {
+const CalcFib = () => {
   const [count, setCount] = useState(0);
   const fib = store.get(fileName).exports.fib(count);
   return (

@@ -13,7 +13,7 @@ store.prefetch('1');
 store.prefetch('2');
 store.prefetch('3');
 
-const App: React.FC = () => (
+const App = () => (
   <Suspense fallback={<span>Loading...</span>}>
     {items.map(({ id }) => (
       <div key={id}>

@@ -7,7 +7,7 @@ type Props = {
   initialId: string;
 };
 
-const Item: React.FC<Props> = ({ initialId }) => {
+const Item = ({ initialId }: Props) => {
   const [text, setText] = useState(initialId);
   const [id, setId] = useState(initialId);
   const result = store.get(id);

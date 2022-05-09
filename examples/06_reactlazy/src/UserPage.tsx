@@ -6,7 +6,7 @@ type Props = {
   getUser: () => UserData;
 };
 
-const UserPage: React.FC<Props> = ({ getUser }) => (
+const UserPage = ({ getUser }: Props) => (
   <div>
     <div>User ID: {getUser().data.id}</div>
     <div>First Name: {getUser().data.first_name}</div>

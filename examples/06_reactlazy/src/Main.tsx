@@ -1,7 +1,4 @@
-// eslint-disable-next-line spaced-comment
-/// <reference types="react/experimental" />
-
-import React, { useState, unstable_useTransition as useTransition } from 'react';
+import React, { useState, useTransition } from 'react';
 
 import { fetchUserData } from './UserPage.data';
 
@@ -11,8 +8,8 @@ const urlParams = new URLSearchParams(window.location.search);
 const initialId = urlParams.get('id');
 const initialPage = initialId ? <UserPage getUser={fetchUserData(initialId)} /> : null;
 
-const Main: React.FC = () => {
-  const [isPending, startTransition] = useTransition() as any; // FIXME
+const Main = () => {
+  const [isPending, startTransition] = useTransition();
   const [userId, setUserId] = useState(initialId);
   const [page, setPage] = useState(initialPage);
   const onClick = () => {

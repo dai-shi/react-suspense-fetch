@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 
 import TodoList from './TodoList';
 
-const App: React.FC = () => (
+const App = () => (
   <Suspense fallback={<span>Loading...</span>}>
     <TodoList />
   </Suspense>

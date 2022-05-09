@@ -1,9 +1,6 @@
-// eslint-disable-next-line spaced-comment
-/// <reference types="react/experimental" />
-
 import React, {
   useState,
-  unstable_useTransition as useTransition,
+  useTransition,
   Dispatch,
   SetStateAction,
 } from 'react';
@@ -14,8 +11,8 @@ type Props = {
   setItems: Dispatch<SetStateAction<TodoType[]>>;
 };
 
-const NewItem: React.FC<Props> = ({ setItems }) => {
-  const [isPending, startTransition] = useTransition() as any; // FIXME
+const NewItem = ({ setItems }: Props) => {
+  const [isPending, startTransition] = useTransition();
   const [name, setName] = useState('');
   const onClick = () => {
     if (!name) return;

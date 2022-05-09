@@ -122,7 +122,7 @@ export function createFetchStore<Result, Input>(
   const createGetResult = (input: Input) => {
     let promise: Promise<void> | null = null;
     let result: Result | null = null;
-    let error: Error | null = null;
+    let error: unknown | null = null;
     promise = (async () => {
       try {
         result = await fetchFunc(input);

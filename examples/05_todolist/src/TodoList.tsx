@@ -1,15 +1,12 @@
-// eslint-disable-next-line spaced-comment
-/// <reference types="react/experimental" />
-
-import React, { useState, unstable_useTransition as useTransition } from 'react';
+import React, { useState, useTransition } from 'react';
 
 import { fetchTodosStore, TodoType } from './fetchFuncs';
 import NewItem from './NewItem';
 
 fetchTodosStore.prefetch(null);
 
-const TodoList: React.FC = () => {
-  const [isPending, startTransition] = useTransition() as any; // FIXME
+const TodoList = () => {
+  const [isPending, startTransition] = useTransition();
   const [items, setItems] = useState<TodoType[]>(fetchTodosStore.get(null));
   const onClick = () => {
     startTransition(() => {

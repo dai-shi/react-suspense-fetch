@@ -1,7 +1,4 @@
-// eslint-disable-next-line spaced-comment
-/// <reference types="react/experimental" />
-
-import React, { unstable_useTransition as useTransition } from 'react';
+import React, { useTransition } from 'react';
 
 import { UserData } from './fetchFuncs';
 
@@ -11,8 +8,8 @@ type Props = {
   update: (id: string) => void;
 };
 
-const DisplayData: React.FC<Props> = ({ id, result, update }) => {
-  const [isPending, startTransition] = useTransition() as any; // FIXME
+const DisplayData = ({ id, result, update }: Props) => {
+  const [isPending, startTransition] = useTransition();
   const onClick = () => {
     startTransition(() => {
       update(id);

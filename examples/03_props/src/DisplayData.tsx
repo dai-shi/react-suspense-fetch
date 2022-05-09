@@ -4,7 +4,7 @@ type Props = {
   result: { data: { first_name: string } };
 };
 
-const DisplayData: React.FC<Props> = ({ result }) => (
+const DisplayData = ({ result }: Props) => (
   <div>
     <div>First Name: {result.data.first_name}</div>
   </div>

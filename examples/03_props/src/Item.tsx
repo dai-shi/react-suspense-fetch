@@ -7,7 +7,7 @@ type Props = {
   id: string;
 };
 
-const Item: React.FC<Props> = ({ id }) => {
+const Item = ({ id }: Props) => {
   const result = store.get(id);
   return (
     <div>

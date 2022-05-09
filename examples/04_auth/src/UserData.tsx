@@ -16,7 +16,7 @@ const fetchUserDataFunc = async (token: string) => {
 
 const userDataStore = createFetchStore(fetchUserDataFunc);
 
-const UserData: React.FC = () => {
+const UserData = () => {
   const [authState] = useAuthContext();
   if (!authState) throw new Error('no authState');
   const result = userDataStore.get(authState.getToken());

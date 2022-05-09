@@ -1,7 +1,4 @@
-// eslint-disable-next-line spaced-comment
-/// <reference types="react/experimental" />
-
-import React, { useState, unstable_useTransition as useTransition } from 'react';
+import React, { useState, useTransition } from 'react';
 
 import { createFetchStore } from 'react-suspense-fetch';
 
@@ -23,11 +20,11 @@ const loginFunc = async ({ email, password }: { email: string; password: string 
 
 const loginStore = createFetchStore(loginFunc);
 
-const Login: React.FC = () => {
+const Login = () => {
   const [, setAuthState] = useAuthContext();
   const [email, setEmail] = useState('eve.holt@reqres.in');
   const [password, setPassword] = useState('cityslicka');
-  const [isPending, startTransition] = useTransition() as any; // FIXME
+  const [isPending, startTransition] = useTransition();
   const onClick = () => {
     startTransition(() => {
       const auth = { email, password };
@@ -53,7 +50,7 @@ const Login: React.FC = () => {
   );
 };
 
-const Main: React.FC = () => {
+const Main = () => {
   const [authState] = useAuthContext();
   if (!authState) return <Login />;
   return <UserData />;
