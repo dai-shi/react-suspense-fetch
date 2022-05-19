@@ -1,6 +1,6 @@
 {
   "name": "react-suspense-fetch",
-  "description": "A primitive library for React Suspense Render-as-You-Fetch",
+  "description": "A low-level library for React Suspense for Data Fetching",
   "version": "0.4.1",
   "author": "Daishi Kato",
   "repository": {

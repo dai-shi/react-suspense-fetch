@@ -1,6 +1,8 @@
 # Change Log
 
 ## [Unreleased]
+### Added
+- feat: abort #43
 
 ## [0.4.1] - 2022-05-09
 ### Changed
