@@ -1,11 +1,15 @@
-type FetchFunc<Result, Input> = (input: Input) => Promise<Result>;
+type FetchFunc<Result, Input> = (
+  input: Input,
+  options: { signal: AbortSignal },
+) => Promise<Result>;
 
 /**
  * fetch store
  *
- * `get` will throw a promise when a result is not ready.
  * `prefetch` will start fetching.
+ * `get` will return a result or throw a promise when a result is not ready.
  * `evict` will remove a result.
+ * `abort` will cancel fetching.
  *
  * There are three cache types:
  * - WeakMap: `input` has to be an object in this case
@@ -13,9 +17,10 @@ type FetchFunc<Result, Input> = (input: Input) => Promise<Result>;
  * - Map with areEqual: you can specify a custom comparator
  */
 export type FetchStore<Result, Input> = {
-  get: (input: Input) => Result;
   prefetch: (input: Input) => void;
+  get: (input: Input) => Result;
   evict: (input: Input) => void;
+  abort: (input: Input) => void;
 };
 
 const isObject = (x: unknown): x is object => typeof x === 'object' && x !== null;
@@ -60,17 +65,17 @@ type CacheType<Input> =
     areEqual?: ((a: Input, b: Input) => boolean);
   };
 
-const createCache = <Input, GetResult>(
+const createCache = <Input, Instance>(
   cacheType?: CacheType<Input>,
 ) => {
   if (cacheType?.type === 'WeakMap') {
-    return new WeakMap<object, GetResult>() as unknown as Map<Input, GetResult>;
+    return new WeakMap<object, Instance>() as unknown as Map<Input, Instance>;
   }
   const areEqual = cacheType?.type === 'Map' && cacheType.areEqual;
   if (areEqual) {
-    return createMapLikeWithComparator<Input, GetResult>(areEqual);
+    return createMapLikeWithComparator<Input, Instance>(areEqual);
   }
-  return new Map<Input, GetResult>();
+  return new Map<Input, Instance>();
 };
 
 export function createFetchStore<Result, Input extends object>(
@@ -103,8 +108,11 @@ export function createFetchStore<Result, Input>(
   cacheType?: CacheType<Input>,
   preloaded?: Iterable<readonly [Input, Result]>,
 ) {
-  type GetResult = () => Result;
-  const cache = createCache<Input, GetResult>(cacheType);
+  type Instance = {
+    get: () => Result;
+    abort: () => void;
+  };
+  const cache = createCache<Input, Instance>(cacheType);
   const assertObjectInput = (input: Input) => {
     if (cacheType?.type === 'WeakMap' && !isObject(input)) {
       throw new Error('WeakMap requires object input');
@@ -113,51 +121,66 @@ export function createFetchStore<Result, Input>(
   if (preloaded) {
     for (const [input, result] of preloaded) {
       assertObjectInput(input);
-      cache.set(input, () => result);
+      cache.set(input, {
+        get: () => result,
+        abort: () => {
+          // nothing
+        },
+      });
     }
   }
-  const createGetResult = (input: Input) => {
+  const createInstance = (input: Input) => {
     let promise: Promise<void> | null = null;
     let result: Result | null = null;
     let error: unknown | null = null;
+    const controller = new AbortController();
     promise = (async () => {
       try {
-        result = await fetchFunc(input);
+        result = await fetchFunc(input, { signal: controller.signal });
       } catch (e) {
         error = e;
       } finally {
         promise = null;
       }
     })();
-    const getResult = () => {
-      if (promise) throw promise;
-      if (error !== null) throw error;
-      return result as Result;
+    return {
+      get: () => {
+        if (promise) throw promise;
+        if (error !== null) throw error;
+        return result as Result;
+      },
+      abort: () => {
+        controller.abort();
+      },
     };
-    return getResult;
   };
   const prefetch = (input: Input) => {
     assertObjectInput(input);
     if (!cache.has(input)) {
-      cache.set(input, createGetResult(input));
+      cache.set(input, createInstance(input));
     }
+  };
+  const get = (input: Input) => {
+    assertObjectInput(input);
+    let instance = cache.get(input);
+    if (!instance) {
+      prefetch(input);
+      instance = cache.get(input) as Instance;
+    }
+    return instance.get();
   };
   const evict = (input: Input) => {
     assertObjectInput(input);
     cache.delete(input);
   };
+  const abort = (input: Input) => {
+    cache.get(input)?.abort();
+  };
   const store: FetchStore<Result, Input> = {
     prefetch,
     evict,
-    get: (input: Input) => {
-      assertObjectInput(input);
-      let getResult = cache.get(input);
-      if (!getResult) {
-        prefetch(input);
-        getResult = cache.get(input) as GetResult;
-      }
-      return getResult();
-    },
+    get,
+    abort,
   };
   return store;
 }
