@@ -5,7 +5,7 @@
 [![size](https://img.shields.io/bundlephobia/minzip/react-suspense-fetch)](https://bundlephobia.com/result?p=react-suspense-fetch)
 [![discord](https://img.shields.io/discord/627656437971288081)](https://discord.gg/MrQdmzd)
 
-A primitive library for React Suspense for Data Fetching
+A low-level library for React Suspense for Data Fetching
 
 ## Introduction
 
@@ -99,9 +99,10 @@ createRoot(document.getElementById('app')).render(<App />);
 
 fetch store
 
-`get` will throw a promise when a result is not ready.
 `prefetch` will start fetching.
+`get` will return a result or throw a promise when a result is not ready.
 `evict` will remove a result.
+`abort` will cancel fetching.
 
 There are three cache types:
 
@@ -109,13 +110,14 @@ There are three cache types:
 *   Map: you need to call evict to remove from cache
 *   Map with areEqual: you can specify a custom comparator
 
-Type: {get: function (input: Input): Result, prefetch: function (input: Input): void, evict: function (input: Input): void}
+Type: {prefetch: function (input: Input): void, get: function (input: Input): Result, evict: function (input: Input): void, abort: function (input: Input): void}
 
 #### Properties
 
-*   `get` **function (input: Input): Result** 
 *   `prefetch` **function (input: Input): void** 
+*   `get` **function (input: Input): Result** 
 *   `evict` **function (input: Input): void** 
+*   `abort` **function (input: Input): void** 
 
 ### createFetchStore
 
@@ -124,7 +126,7 @@ create fetch store
 #### Parameters
 
 *   `fetchFunc` **FetchFunc\<Result, Input>** 
-*   `cacheType` **({type: `"WeakMap"`} | {type: `"Map"`, areEqual: function (a: Input, b: Input): [boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?})?** 
+*   `cacheType` **CacheType\<Input>?** 
 *   `preloaded` **Iterable\<any>?** 
 
 #### Examples
