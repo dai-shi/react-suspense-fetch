@@ -14,7 +14,7 @@ but Suspense for Data Fetching is left for data frameworks.
 The goal of this library is to provide a thin API
 to allow Suspense For Data Fetching without richer frameworks.
 
-Project status: Experimental. API should mostly be good, but we need to establish its usage.
+Project status: Waiting more feedbacks before finalizing the API.
 
 ## Install
 
@@ -110,12 +110,12 @@ There are three cache types:
 *   Map: you need to call evict to remove from cache
 *   Map with areEqual: you can specify a custom comparator
 
-Type: {prefetch: function (input: Input): void, get: function (input: Input): Result, evict: function (input: Input): void, abort: function (input: Input): void}
+Type: {prefetch: function (input: Input): void, get: function (input: Input, option: GetOptions): Result, evict: function (input: Input): void, abort: function (input: Input): void}
 
 #### Properties
 
 *   `prefetch` **function (input: Input): void** 
-*   `get` **function (input: Input): Result** 
+*   `get` **function (input: Input, option: GetOptions): Result** 
 *   `evict` **function (input: Input): void** 
 *   `abort` **function (input: Input): void** 
 
