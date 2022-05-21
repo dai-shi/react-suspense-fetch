@@ -1,6 +1,8 @@
 # Change Log
 
 ## [Unreleased]
+### Changed
+- add get options to explicitly force prefetch #44
 
 ## [0.5.0] - 2022-05-19
 ### Added

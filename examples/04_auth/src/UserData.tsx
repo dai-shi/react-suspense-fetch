@@ -19,7 +19,9 @@ const userDataStore = createFetchStore(fetchUserDataFunc);
 const UserData = () => {
   const [authState] = useAuthContext();
   if (!authState) throw new Error('no authState');
-  const result = userDataStore.get(authState.getToken());
+  const token = authState.getToken();
+  userDataStore.prefetch(token); // unavoidable waterfalls?
+  const result = userDataStore.get(token);
   return (
     <ul>
       {result.data.map((item) => (
