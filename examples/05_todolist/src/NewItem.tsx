@@ -17,6 +17,7 @@ const NewItem = ({ setItems }: Props) => {
   const onClick = () => {
     if (!name) return;
     startTransition(() => {
+      createTodoStore.prefetch(name);
       setItems((prev) => [...prev, createTodoStore.get(name)]);
       setName('');
     });

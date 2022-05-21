@@ -3,6 +3,10 @@ type FetchFunc<Result, Input> = (
   options: { signal: AbortSignal },
 ) => Promise<Result>;
 
+type GetOptions = {
+  forcePrefetch?: boolean;
+};
+
 /**
  * fetch store
  *
@@ -18,7 +22,7 @@ type FetchFunc<Result, Input> = (
  */
 export type FetchStore<Result, Input> = {
   prefetch: (input: Input) => void;
-  get: (input: Input) => Result;
+  get: (input: Input, option?: GetOptions) => Result;
   evict: (input: Input) => void;
   abort: (input: Input) => void;
 };
@@ -160,12 +164,14 @@ export function createFetchStore<Result, Input>(
       cache.set(input, createInstance(input));
     }
   };
-  const get = (input: Input) => {
+  const get = (input: Input, options?: GetOptions) => {
     assertObjectInput(input);
-    let instance = cache.get(input);
-    if (!instance) {
+    if (options?.forcePrefetch) {
       prefetch(input);
-      instance = cache.get(input) as Instance;
+    }
+    const instance = cache.get(input);
+    if (!instance) {
+      throw new Error('prefetch() must be called before get()');
     }
     return instance.get();
   };
@@ -174,12 +180,13 @@ export function createFetchStore<Result, Input>(
     cache.delete(input);
   };
   const abort = (input: Input) => {
+    assertObjectInput(input);
     cache.get(input)?.abort();
   };
   const store: FetchStore<Result, Input> = {
     prefetch,
-    evict,
     get,
+    evict,
     abort,
   };
   return store;
