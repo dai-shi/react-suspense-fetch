@@ -1,6 +1,8 @@
 # Change Log
 
 ## [Unreleased]
+### Added
+- feat: preset #48
 
 ## [0.5.1] - 2022-05-21
 ### Changed

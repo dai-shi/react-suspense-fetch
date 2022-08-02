@@ -12,6 +12,7 @@ type GetOptions = {
  *
  * `prefetch` will start fetching.
  * `get` will return a result or throw a promise when a result is not ready.
+ * `preset` will set a result without fetching.
  * `evict` will remove a result.
  * `abort` will cancel fetching.
  *
@@ -23,6 +24,7 @@ type GetOptions = {
 export type FetchStore<Result, Input> = {
   prefetch: (input: Input) => void;
   get: (input: Input, option?: GetOptions) => Result;
+  preset: (input: Input, result: Result) => void;
   evict: (input: Input) => void;
   abort: (input: Input) => void;
 };
@@ -85,7 +87,7 @@ const createCache = <Input, Instance>(
 export function createFetchStore<Result, Input extends object>(
   fetchFunc: FetchFunc<Result, Input>,
   cacheType: { type: 'WeakMap' },
-  preloaded?: Iterable<readonly [Input, Result]>,
+  presets?: Iterable<readonly [Input, Result]>,
 ): FetchStore<Result, Input>
 
 export function createFetchStore<Result, Input>(
@@ -94,7 +96,7 @@ export function createFetchStore<Result, Input>(
     type: 'Map';
     areEqual?: ((a: Input, b: Input) => boolean);
   },
-  preloaded?: Iterable<readonly [Input, Result]>,
+  presets?: Iterable<readonly [Input, Result]>,
 ): FetchStore<Result, Input>
 
 /**
@@ -110,7 +112,7 @@ export function createFetchStore<Result, Input>(
 export function createFetchStore<Result, Input>(
   fetchFunc: FetchFunc<Result, Input>,
   cacheType?: CacheType<Input>,
-  preloaded?: Iterable<readonly [Input, Result]>,
+  presets?: Iterable<readonly [Input, Result]>,
 ) {
   type Instance = {
     get: () => Result;
@@ -122,15 +124,18 @@ export function createFetchStore<Result, Input>(
       throw new Error('WeakMap requires object input');
     }
   };
-  if (preloaded) {
-    for (const [input, result] of preloaded) {
-      assertObjectInput(input);
-      cache.set(input, {
-        get: () => result,
-        abort: () => {
-          // nothing
-        },
-      });
+  const preset = (input: Input, result: Result) => {
+    assertObjectInput(input);
+    cache.set(input, {
+      get: () => result,
+      abort: () => {
+        // nothing
+      },
+    });
+  };
+  if (presets) {
+    for (const [input, result] of presets) {
+      preset(input, result);
     }
   }
   const createInstance = (input: Input) => {
@@ -186,6 +191,7 @@ export function createFetchStore<Result, Input>(
   const store: FetchStore<Result, Input> = {
     prefetch,
     get,
+    preset,
     evict,
     abort,
   };
