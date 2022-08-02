@@ -1,7 +1,7 @@
 {
   "name": "react-suspense-fetch",
   "description": "A low-level library for React Suspense for Data Fetching",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "author": "Daishi Kato",
   "repository": {
     "type": "git",
