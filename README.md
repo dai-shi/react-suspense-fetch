@@ -101,6 +101,7 @@ fetch store
 
 `prefetch` will start fetching.
 `get` will return a result or throw a promise when a result is not ready.
+`preset` will set a result without fetching.
 `evict` will remove a result.
 `abort` will cancel fetching.
 
@@ -110,12 +111,13 @@ There are three cache types:
 *   Map: you need to call evict to remove from cache
 *   Map with areEqual: you can specify a custom comparator
 
-Type: {prefetch: function (input: Input): void, get: function (input: Input, option: GetOptions): Result, evict: function (input: Input): void, abort: function (input: Input): void}
+Type: {prefetch: function (input: Input): void, get: function (input: Input, option: GetOptions): Result, preset: function (input: Input, result: Result): void, evict: function (input: Input): void, abort: function (input: Input): void}
 
 #### Properties
 
 *   `prefetch` **function (input: Input): void** 
 *   `get` **function (input: Input, option: GetOptions): Result** 
+*   `preset` **function (input: Input, result: Result): void** 
 *   `evict` **function (input: Input): void** 
 *   `abort` **function (input: Input): void** 
 
@@ -127,7 +129,7 @@ create fetch store
 
 *   `fetchFunc` **FetchFunc\<Result, Input>** 
 *   `cacheType` **CacheType\<Input>?** 
-*   `preloaded` **Iterable\<any>?** 
+*   `presets` **Iterable\<any>?** 
 
 #### Examples
 
