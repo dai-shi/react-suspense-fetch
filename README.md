@@ -1,6 +1,12 @@
+This project is no longer maintained.
+React will soon introduce [the `use` hook](https://github.com/reactjs/rfcs/pull/229) and `cache`.
+They cover what this project was trying to accomplish.
+
+---
+
 # react-suspense-fetch
 
-[![CI](https://img.shields.io/github/workflow/status/dai-shi/react-suspense-fetch/CI)](https://github.com/dai-shi/react-suspense-fetch/actions?query=workflow%3ACI)
+[![CI](https://img.shields.io/github/actions/workflow/status/dai-shi/react-suspense-fetch/ci.yml?branch=main)](https://github.com/dai-shi/react-suspense-fetch/actions?query=workflow%3ACI)
 [![npm](https://img.shields.io/npm/v/react-suspense-fetch)](https://www.npmjs.com/package/react-suspense-fetch)
 [![size](https://img.shields.io/bundlephobia/minzip/react-suspense-fetch)](https://bundlephobia.com/result?p=react-suspense-fetch)
 [![discord](https://img.shields.io/discord/627656437971288081)](https://discord.gg/MrQdmzd)
